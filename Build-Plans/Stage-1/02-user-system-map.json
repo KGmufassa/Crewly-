@@ -1,0 +1,177 @@
+{
+  "stage": "Stage 1",
+  "status": "finalized",
+  "command": "Stage-1-product-initialization",
+  "artifact_id": "ARTIFACT-STAGE1-02",
+  "user_profiles": [
+    {
+      "user_id": "USER-001",
+      "role": "Trip Organizer",
+      "motivations": [
+        "Coordinate the trip in one place",
+        "Collect support or pooled funds",
+        "Maintain spending transparency",
+        "Control privacy and member access"
+      ],
+      "pain_points": [
+        "Scattered planning information",
+        "Unclear who paid for what",
+        "Difficulty updating supporters without exposing private details",
+        "Manual reconciliation of receipts and subgroup costs"
+      ],
+      "permissions": [
+        "create_trip",
+        "manage_trip_visibility",
+        "approve_members",
+        "control_payout_account",
+        "curate_public_highlights",
+        "review_trip_ledger"
+      ],
+      "desired_outcomes": [
+        "Successful trip coordination",
+        "Transparent contribution tracking",
+        "Reduced planning overhead",
+        "Clear public/private separation"
+      ]
+    },
+    {
+      "user_id": "USER-002",
+      "role": "Trip Member",
+      "motivations": [
+        "Access private trip details",
+        "Contribute expenses, receipts, and photos",
+        "Join subgroup activities privately",
+        "Understand shared balances and trip updates"
+      ],
+      "pain_points": [
+        "Not knowing current plans or balances",
+        "Language or currency barriers on receipts",
+        "Confusion around private side-event costs",
+        "Limited way to contribute beyond messaging"
+      ],
+      "permissions": [
+        "view_private_trip_workspace",
+        "contribute_to_trip",
+        "log_trip_expenses",
+        "upload_receipts",
+        "upload_photos",
+        "create_private_events",
+        "track_event_expenses"
+      ],
+      "desired_outcomes": [
+        "Easy participation in planning and spending",
+        "Confidence in receipt and balance accuracy",
+        "Private coordination for subset activities"
+      ]
+    },
+    {
+      "user_id": "USER-003",
+      "role": "Public Supporter",
+      "motivations": [
+        "Support a trip financially",
+        "Follow public updates or milestones"
+      ],
+      "pain_points": [
+        "Low trust in where money goes",
+        "Too little visibility into trip progress"
+      ],
+      "permissions": [
+        "view_public_trip_page",
+        "contribute_to_trip_fund"
+      ],
+      "desired_outcomes": [
+        "Quick contribution flow",
+        "Basic confidence that support is helping the trip"
+      ]
+    },
+    {
+      "user_id": "USER-004",
+      "role": "Platform Admin",
+      "motivations": [
+        "Keep platform safe and compliant",
+        "Resolve payment and moderation issues"
+      ],
+      "pain_points": [
+        "Potential payment disputes",
+        "Public content abuse",
+        "Privacy leakage across trip scopes"
+      ],
+      "permissions": [
+        "review_reports",
+        "moderate_content",
+        "assist_with_payment_issues",
+        "review_audit_logs"
+      ],
+      "desired_outcomes": [
+        "Safe, supportable product operations"
+      ]
+    }
+  ],
+  "user_needs": [
+    {
+      "need_id": "USER-NEED-001",
+      "user_id": "USER-001",
+      "need": "Centralized organizer control over trip setup, member approvals, and payout ownership."
+    },
+    {
+      "need_id": "USER-NEED-002",
+      "user_id": "USER-002",
+      "need": "Member participation in expense logging, receipt upload, and private event management."
+    },
+    {
+      "need_id": "USER-NEED-003",
+      "user_id": "USER-003",
+      "need": "A simple, trustworthy public contribution experience."
+    }
+  ],
+  "access_model": {
+    "public_surface": {
+      "allowed_users": [
+        "USER-001",
+        "USER-002",
+        "USER-003",
+        "USER-004"
+      ],
+      "visible_content": [
+        "trip summary",
+        "selected bulletin updates",
+        "contribution CTA",
+        "optional public photo highlights"
+      ]
+    },
+    "private_trip_workspace": {
+      "allowed_users": [
+        "USER-001",
+        "USER-002",
+        "USER-004"
+      ],
+      "visible_content": [
+        "full trip details",
+        "trip ledger context",
+        "member-only album",
+        "receipt records"
+      ]
+    },
+    "private_event_workspace": {
+      "allowed_users": [
+        "USER-001",
+        "USER-002",
+        "USER-004"
+      ],
+      "visibility_rule": "Only selected event participants and platform admins can access event-specific data."
+    }
+  },
+  "traceability": {
+    "workflow_ids": [
+      "WORKFLOW-002",
+      "WORKFLOW-007",
+      "WORKFLOW-008",
+      "WORKFLOW-009"
+    ],
+    "boundary_ids": [
+      "BOUNDARY-001",
+      "BOUNDARY-002",
+      "BOUNDARY-003"
+    ]
+  }
+}

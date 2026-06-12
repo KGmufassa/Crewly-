@@ -1,0 +1,172 @@
+{
+  "stage": "Stage 1",
+  "status": "finalized",
+  "command": "Stage-1-product-initialization",
+  "artifact_id": "ARTIFACT-STAGE1-04",
+  "capabilities": [
+    {
+      "capability_id": "CAP-001",
+      "name": "Trip Management",
+      "supports_workflows": [
+        "WORKFLOW-001",
+        "WORKFLOW-002"
+      ]
+    },
+    {
+      "capability_id": "CAP-002",
+      "name": "Membership and Permissions",
+      "supports_workflows": [
+        "WORKFLOW-002",
+        "WORKFLOW-008",
+        "WORKFLOW-009"
+      ]
+    },
+    {
+      "capability_id": "CAP-003",
+      "name": "Public Contribution Campaigns",
+      "supports_workflows": [
+        "WORKFLOW-003",
+        "WORKFLOW-006"
+      ]
+    },
+    {
+      "capability_id": "CAP-004",
+      "name": "Organizer Payout Handling",
+      "supports_workflows": [
+        "WORKFLOW-003",
+        "WORKFLOW-010"
+      ]
+    },
+    {
+      "capability_id": "CAP-005",
+      "name": "Trip Expense Ledger",
+      "supports_workflows": [
+        "WORKFLOW-004",
+        "WORKFLOW-010"
+      ]
+    },
+    {
+      "capability_id": "CAP-006",
+      "name": "Private Event Ledger",
+      "supports_workflows": [
+        "WORKFLOW-008",
+        "WORKFLOW-009",
+        "WORKFLOW-010"
+      ]
+    },
+    {
+      "capability_id": "CAP-007",
+      "name": "Receipt OCR and Extraction",
+      "supports_workflows": [
+        "WORKFLOW-005"
+      ]
+    },
+    {
+      "capability_id": "CAP-008",
+      "name": "Receipt Translation and Localization",
+      "supports_workflows": [
+        "WORKFLOW-005"
+      ]
+    },
+    {
+      "capability_id": "CAP-009",
+      "name": "Bulletin Board and Public Updates",
+      "supports_workflows": [
+        "WORKFLOW-006"
+      ]
+    },
+    {
+      "capability_id": "CAP-010",
+      "name": "Photo Album and Public Highlights",
+      "supports_workflows": [
+        "WORKFLOW-007",
+        "WORKFLOW-006"
+      ]
+    },
+    {
+      "capability_id": "CAP-011",
+      "name": "Notifications",
+      "supports_workflows": [
+        "WORKFLOW-002",
+        "WORKFLOW-003",
+        "WORKFLOW-006",
+        "WORKFLOW-008"
+      ]
+    },
+    {
+      "capability_id": "CAP-012",
+      "name": "Moderation, Audit, and Support",
+      "supports_workflows": [
+        "WORKFLOW-003",
+        "WORKFLOW-006",
+        "WORKFLOW-007",
+        "WORKFLOW-009"
+      ]
+    }
+  ],
+  "capability_dependencies": [
+    {
+      "dependency_id": "CAP-DEP-001",
+      "capability_id": "CAP-003",
+      "depends_on": [
+        "CAP-002",
+        "CAP-004",
+        "CAP-012"
+      ]
+    },
+    {
+      "dependency_id": "CAP-DEP-002",
+      "capability_id": "CAP-005",
+      "depends_on": [
+        "CAP-002",
+        "CAP-007",
+        "CAP-008"
+      ]
+    },
+    {
+      "dependency_id": "CAP-DEP-003",
+      "capability_id": "CAP-006",
+      "depends_on": [
+        "CAP-002",
+        "CAP-007"
+      ]
+    },
+    {
+      "dependency_id": "CAP-DEP-004",
+      "capability_id": "CAP-010",
+      "depends_on": [
+        "CAP-002",
+        "CAP-012"
+      ]
+    }
+  ],
+  "operational_domains": [
+    {
+      "domain": "trip coordination",
+      "capability_ids": [
+        "CAP-001",
+        "CAP-002",
+        "CAP-009",
+        "CAP-011"
+      ]
+    },
+    {
+      "domain": "financial tracking",
+      "capability_ids": [
+        "CAP-003",
+        "CAP-004",
+        "CAP-005",
+        "CAP-006",
+        "CAP-007",
+        "CAP-008"
+      ]
+    },
+    {
+      "domain": "shared media and trust",
+      "capability_ids": [
+        "CAP-010",
+        "CAP-012"
+      ]
+    }
+  ]
+}

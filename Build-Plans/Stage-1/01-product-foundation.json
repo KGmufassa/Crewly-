@@ -1,0 +1,94 @@
+{
+  "stage": "Stage 1",
+  "status": "finalized",
+  "command": "Stage-1-product-initialization",
+  "artifact_id": "ARTIFACT-STAGE1-01",
+  "product_identity": {
+    "product_id": "PRODUCT-001",
+    "name": "Crewly",
+    "type": "social trip coordination and pooled funding platform",
+    "category": "travel collaboration, group finance, and social coordination",
+    "primary_user_role_id": "USER-001",
+    "core_problem": "Group trips are difficult to coordinate because planning, pooled funds, receipts, private side expenses, and updates are scattered across disconnected tools.",
+    "core_promise": "Crewly gives a trip organizer one place to coordinate the trip, collect support, track spending transparently, and manage private subgroup activity without exposing sensitive details publicly.",
+    "primary_user_outcome": "A trip organizer successfully launches a trip, gets the right people into the group, collects funds, tracks shared and subgroup expenses, and keeps members and supporters informed at the right privacy level.",
+    "secondary_outcomes": [
+      "Trip members can actively contribute receipts, expenses, event updates, and photos.",
+      "Public supporters can contribute to selected trips without accessing private group details.",
+      "Private subgroup participants can track side-event expenses and payment status without cluttering the main trip ledger.",
+      "International travelers can understand receipts via translation and display-only currency conversion."
+    ]
+  },
+  "product_category": {
+    "primary": "consumer collaboration platform",
+    "secondary": [
+      "travel planning",
+      "crowdfunding-style trip support",
+      "group expense tracking",
+      "private event coordination"
+    ]
+  },
+  "strategic_intent": {
+    "why_now": "Trip coordination increasingly spans public support, private planning, receipts, shared memories, and side-event spending, but mainstream tools split those needs across separate apps.",
+    "what_must_be_true": [
+      "Organizers trust Crewly to centralize trip setup and financial visibility.",
+      "Members are willing to participate in shared financial logging and content contribution.",
+      "Supporters are comfortable contributing without seeing private details.",
+      "Users understand the distinction between trip-wide funds and private event balances."
+    ],
+    "required_user_behaviors": [
+      "Organizers create and maintain the trip hub.",
+      "Members upload receipts, expenses, photos, and event activity.",
+      "Supporters use the public trip surface to contribute.",
+      "Event creators keep side-event tracking scoped to the right participants."
+    ],
+    "initial_exclusions": [
+      "In-app peer-to-peer settlement for private events",
+      "Automatic rollup of private event balances into the trip ledger",
+      "Accounting-grade multi-currency normalization",
+      "Travel booking integrations",
+      "Advanced fraud, dispute, and reimbursement tooling",
+      "Cross-event debt optimization"
+    ]
+  },
+  "assumptions": [
+    {
+      "assumption_id": "ASSUMPTION-001",
+      "statement": "Trip contributions are support toward the trip rather than lending or equity.",
+      "impact": "Defines the MVP payment posture and contributor expectations."
+    },
+    {
+      "assumption_id": "ASSUMPTION-002",
+      "statement": "Organizer-controlled payout is acceptable for MVP if ledger transparency is clear.",
+      "impact": "Enables a simpler first payment model."
+    },
+    {
+      "assumption_id": "ASSUMPTION-003",
+      "statement": "Display-only currency conversion is sufficient for shared trip comprehension.",
+      "impact": "Avoids accounting complexity in MVP."
+    },
+    {
+      "assumption_id": "ASSUMPTION-004",
+      "statement": "Approved members can freely create private events without causing confusing or abusive subgroup sprawl.",
+      "impact": "Shapes event permissions and moderation scope."
+    }
+  ],
+  "traceability": {
+    "user_role_ids": [
+      "USER-001",
+      "USER-002",
+      "USER-003",
+      "USER-004"
+    ],
+    "workflow_ids": [
+      "WORKFLOW-001",
+      "WORKFLOW-003",
+      "WORKFLOW-008"
+    ],
+    "feature_ids": [
+      "FEATURE-001",
+      "FEATURE-006",
+      "FEATURE-017"
+    ]
+  }
+}

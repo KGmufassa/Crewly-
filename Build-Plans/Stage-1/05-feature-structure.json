@@ -1,0 +1,120 @@
+{
+  "stage": "Stage 1",
+  "status": "finalized",
+  "command": "Stage-1-product-initialization",
+  "artifact_id": "ARTIFACT-STAGE1-05",
+  "feature_groups": [
+    {
+      "group_id": "FEATURE-GROUP-001",
+      "name": "Trip Setup and Access",
+      "feature_ids": [
+        "FEATURE-001",
+        "FEATURE-002",
+        "FEATURE-003",
+        "FEATURE-004"
+      ]
+    },
+    {
+      "group_id": "FEATURE-GROUP-002",
+      "name": "Public Funding and Updates",
+      "feature_ids": [
+        "FEATURE-005",
+        "FEATURE-006",
+        "FEATURE-007",
+        "FEATURE-014",
+        "FEATURE-015"
+      ]
+    },
+    {
+      "group_id": "FEATURE-GROUP-003",
+      "name": "Trip Ledger and Receipts",
+      "feature_ids": [
+        "FEATURE-008",
+        "FEATURE-009",
+        "FEATURE-010",
+        "FEATURE-011",
+        "FEATURE-012",
+        "FEATURE-013",
+        "FEATURE-021",
+        "FEATURE-023"
+      ]
+    },
+    {
+      "group_id": "FEATURE-GROUP-004",
+      "name": "Media and Memories",
+      "feature_ids": [
+        "FEATURE-016"
+      ]
+    },
+    {
+      "group_id": "FEATURE-GROUP-005",
+      "name": "Private Events",
+      "feature_ids": [
+        "FEATURE-017",
+        "FEATURE-018",
+        "FEATURE-019",
+        "FEATURE-020"
+      ]
+    },
+    {
+      "group_id": "FEATURE-GROUP-006",
+      "name": "Platform Operations",
+      "feature_ids": [
+        "FEATURE-022",
+        "FEATURE-024"
+      ]
+    }
+  ],
+  "features": [
+    {"feature_id": "FEATURE-001", "name": "Trip creation", "capability_id": "CAP-001", "priority": "must_have"},
+    {"feature_id": "FEATURE-002", "name": "Trip visibility settings", "capability_id": "CAP-001", "priority": "must_have"},
+    {"feature_id": "FEATURE-003", "name": "Member invites", "capability_id": "CAP-002", "priority": "must_have"},
+    {"feature_id": "FEATURE-004", "name": "Member approval", "capability_id": "CAP-002", "priority": "must_have"},
+    {"feature_id": "FEATURE-005", "name": "Public trip page", "capability_id": "CAP-003", "priority": "must_have"},
+    {"feature_id": "FEATURE-006", "name": "Contribution collection", "capability_id": "CAP-003", "priority": "must_have"},
+    {"feature_id": "FEATURE-007", "name": "Organizer payout account", "capability_id": "CAP-004", "priority": "must_have"},
+    {"feature_id": "FEATURE-008", "name": "Trip expense entry", "capability_id": "CAP-005", "priority": "must_have"},
+    {"feature_id": "FEATURE-009", "name": "Receipt upload", "capability_id": "CAP-007", "priority": "must_have"},
+    {"feature_id": "FEATURE-010", "name": "OCR extraction", "capability_id": "CAP-007", "priority": "must_have"},
+    {"feature_id": "FEATURE-011", "name": "Receipt translation", "capability_id": "CAP-008", "priority": "must_have"},
+    {"feature_id": "FEATURE-012", "name": "Display currency conversion", "capability_id": "CAP-008", "priority": "must_have"},
+    {"feature_id": "FEATURE-013", "name": "Manual receipt correction", "capability_id": "CAP-008", "priority": "must_have"},
+    {"feature_id": "FEATURE-014", "name": "Bulletin updates", "capability_id": "CAP-009", "priority": "must_have"},
+    {"feature_id": "FEATURE-015", "name": "Public photo highlights", "capability_id": "CAP-010", "priority": "should_have"},
+    {"feature_id": "FEATURE-016", "name": "Member-only album", "capability_id": "CAP-010", "priority": "must_have"},
+    {"feature_id": "FEATURE-017", "name": "Private event creation", "capability_id": "CAP-006", "priority": "must_have"},
+    {"feature_id": "FEATURE-018", "name": "Event participant selection", "capability_id": "CAP-006", "priority": "must_have"},
+    {"feature_id": "FEATURE-019", "name": "Event expense tracking", "capability_id": "CAP-006", "priority": "must_have"},
+    {"feature_id": "FEATURE-020", "name": "Event payment tracking", "capability_id": "CAP-006", "priority": "must_have"},
+    {"feature_id": "FEATURE-021", "name": "Ledger separation views", "capability_id": "CAP-005", "priority": "must_have"},
+    {"feature_id": "FEATURE-022", "name": "Notifications", "capability_id": "CAP-011", "priority": "should_have"},
+    {"feature_id": "FEATURE-023", "name": "Audit trail", "capability_id": "CAP-012", "priority": "must_have"},
+    {"feature_id": "FEATURE-024", "name": "Content and report moderation", "capability_id": "CAP-012", "priority": "should_have"}
+  ],
+  "feature_relationships": [
+    {
+      "relationship_id": "REL-FEATURE-001",
+      "from_feature_id": "FEATURE-006",
+      "to_feature_id": "FEATURE-007",
+      "type": "depends_on"
+    },
+    {
+      "relationship_id": "REL-FEATURE-002",
+      "from_feature_id": "FEATURE-009",
+      "to_feature_id": "FEATURE-010",
+      "type": "depends_on"
+    },
+    {
+      "relationship_id": "REL-FEATURE-003",
+      "from_feature_id": "FEATURE-010",
+      "to_feature_id": "FEATURE-011",
+      "type": "supports"
+    },
+    {
+      "relationship_id": "REL-FEATURE-004",
+      "from_feature_id": "FEATURE-017",
+      "to_feature_id": "FEATURE-020",
+      "type": "enables"
+    }
+  ]
+}

@@ -1,0 +1,238 @@
+{
+  "stage": "Stage 1",
+  "status": "finalized",
+  "command": "Stage-1-product-initialization",
+  "artifact_id": "ARTIFACT-STAGE1-03",
+  "workflows": [
+    {
+      "workflow_id": "WORKFLOW-001",
+      "name": "Create trip and configure visibility",
+      "primary_user_id": "USER-001",
+      "start_state": "Organizer has a trip idea but no structured trip hub.",
+      "user_actions": [
+        "create trip",
+        "set trip basics",
+        "choose public contribution visibility",
+        "configure private workspace rules"
+      ],
+      "system_actions": [
+        "create trip container",
+        "store visibility settings",
+        "prepare public and private surfaces"
+      ],
+      "end_state": "Trip exists with clear public/private boundaries."
+    },
+    {
+      "workflow_id": "WORKFLOW-002",
+      "name": "Invite and approve members",
+      "primary_user_id": "USER-001",
+      "start_state": "Trip exists but members do not have access.",
+      "user_actions": [
+        "send invitations",
+        "review membership requests",
+        "approve members"
+      ],
+      "system_actions": [
+        "issue invites",
+        "apply approval state",
+        "grant private workspace access"
+      ],
+      "end_state": "Approved members can access private trip details."
+    },
+    {
+      "workflow_id": "WORKFLOW-003",
+      "name": "Publish public trip page and collect contributions",
+      "primary_user_id": "USER-001",
+      "supporting_user_ids": [
+        "USER-003"
+      ],
+      "start_state": "Trip exists but public supporters cannot yet contribute.",
+      "user_actions": [
+        "publish public page",
+        "share contribution campaign",
+        "supporter submits contribution"
+      ],
+      "system_actions": [
+        "display public trip summary",
+        "process payment",
+        "update contribution ledger and organizer payout context"
+      ],
+      "end_state": "Trip has active public contribution flow with ledger visibility."
+    },
+    {
+      "workflow_id": "WORKFLOW-004",
+      "name": "Log trip-wide expenses",
+      "primary_user_id": "USER-002",
+      "supporting_user_ids": [
+        "USER-001"
+      ],
+      "start_state": "Trip spending occurs but is not yet recorded.",
+      "user_actions": [
+        "create expense entry",
+        "assign expense details",
+        "link trip context"
+      ],
+      "system_actions": [
+        "record expense",
+        "associate expense with trip ledger",
+        "make it visible to authorized users"
+      ],
+      "end_state": "Trip expense appears in the main trip ledger."
+    },
+    {
+      "workflow_id": "WORKFLOW-005",
+      "name": "Upload receipt, extract data, translate, and convert display currency",
+      "primary_user_id": "USER-002",
+      "supporting_user_ids": [
+        "USER-001"
+      ],
+      "start_state": "User has a receipt that needs to become a usable expense record.",
+      "user_actions": [
+        "upload receipt",
+        "review extracted fields",
+        "view translated receipt text",
+        "view converted display currency",
+        "manually correct errors"
+      ],
+      "system_actions": [
+        "store file",
+        "run OCR extraction",
+        "detect source language and currency",
+        "translate text to trip default or override language",
+        "convert amounts for display only",
+        "preserve original receipt values as source of truth"
+      ],
+      "end_state": "Receipt becomes a corrected, localized expense artifact with original values preserved."
+    },
+    {
+      "workflow_id": "WORKFLOW-006",
+      "name": "Publish bulletin updates and public highlights",
+      "primary_user_id": "USER-001",
+      "start_state": "Trip activity exists but public/supporter-facing updates are outdated.",
+      "user_actions": [
+        "post bulletin update",
+        "choose whether content is public or member-only",
+        "select public highlights"
+      ],
+      "system_actions": [
+        "publish update to selected audience",
+        "apply moderation and visibility rules"
+      ],
+      "end_state": "Supporters and members receive the appropriate trip update."
+    },
+    {
+      "workflow_id": "WORKFLOW-007",
+      "name": "Upload and view member-only trip album",
+      "primary_user_id": "USER-002",
+      "supporting_user_ids": [
+        "USER-001"
+      ],
+      "start_state": "Trip participants have photos but no shared album.",
+      "user_actions": [
+        "upload group photos",
+        "browse member album",
+        "organizer optionally promotes selected photos as public highlights"
+      ],
+      "system_actions": [
+        "store media",
+        "apply member-only default visibility",
+        "publish approved highlights publicly when selected"
+      ],
+      "end_state": "Members have a private album with optional organizer-approved public highlights."
+    },
+    {
+      "workflow_id": "WORKFLOW-008",
+      "name": "Create private sub-event with selected members",
+      "primary_user_id": "USER-002",
+      "start_state": "A subset of trip members needs a private side activity space.",
+      "user_actions": [
+        "create private event",
+        "select participants from approved trip members",
+        "configure private visibility"
+      ],
+      "system_actions": [
+        "create event container",
+        "apply participant-scoped access rules"
+      ],
+      "end_state": "Private event exists and is visible only to selected participants."
+    },
+    {
+      "workflow_id": "WORKFLOW-009",
+      "name": "Track private sub-event expenses and payment status",
+      "primary_user_id": "USER-002",
+      "start_state": "A private event exists but spending and payment obligations are not tracked.",
+      "user_actions": [
+        "log event expense",
+        "attach event receipt if needed",
+        "record who owes whom",
+        "update payment status"
+      ],
+      "system_actions": [
+        "store event-scoped ledger entries",
+        "keep event balances separate from trip ledger",
+        "limit visibility to event participants"
+      ],
+      "end_state": "Private event participants can see event-specific balances and payment status."
+    },
+    {
+      "workflow_id": "WORKFLOW-010",
+      "name": "Review trip-level and event-level balances separately",
+      "primary_user_id": "USER-001",
+      "supporting_user_ids": [
+        "USER-002"
+      ],
+      "start_state": "Trip and event financial activity exist across multiple scopes.",
+      "user_actions": [
+        "view trip-wide contribution and expense status",
+        "view event-specific balances when authorized"
+      ],
+      "system_actions": [
+        "render separate summaries",
+        "avoid auto-merging event balances into trip totals in MVP"
+      ],
+      "end_state": "Users understand trip-wide and event-level balances without scope confusion."
+    }
+  ],
+  "workflow_relationships": [
+    {
+      "relationship_id": "REL-WORKFLOW-001",
+      "from_workflow_id": "WORKFLOW-001",
+      "to_workflow_id": "WORKFLOW-002",
+      "type": "prerequisite"
+    },
+    {
+      "relationship_id": "REL-WORKFLOW-002",
+      "from_workflow_id": "WORKFLOW-002",
+      "to_workflow_id": "WORKFLOW-008",
+      "type": "prerequisite"
+    },
+    {
+      "relationship_id": "REL-WORKFLOW-003",
+      "from_workflow_id": "WORKFLOW-004",
+      "to_workflow_id": "WORKFLOW-005",
+      "type": "supporting"
+    },
+    {
+      "relationship_id": "REL-WORKFLOW-004",
+      "from_workflow_id": "WORKFLOW-008",
+      "to_workflow_id": "WORKFLOW-009",
+      "type": "prerequisite"
+    }
+  ],
+  "operational_separation": {
+    "trip_scoped_workflows": [
+      "WORKFLOW-001",
+      "WORKFLOW-002",
+      "WORKFLOW-003",
+      "WORKFLOW-004",
+      "WORKFLOW-005",
+      "WORKFLOW-006",
+      "WORKFLOW-007",
+      "WORKFLOW-010"
+    ],
+    "event_scoped_workflows": [
+      "WORKFLOW-008",
+      "WORKFLOW-009"
+    ]
+  }
+}

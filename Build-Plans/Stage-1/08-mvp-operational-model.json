@@ -1,0 +1,112 @@
+{
+  "stage": "Stage 1",
+  "status": "finalized",
+  "command": "Stage-1-product-initialization",
+  "artifact_id": "ARTIFACT-STAGE1-08",
+  "mvp_scope": {
+    "must_have_workflows": [
+      "WORKFLOW-001",
+      "WORKFLOW-002",
+      "WORKFLOW-003",
+      "WORKFLOW-004",
+      "WORKFLOW-005",
+      "WORKFLOW-006",
+      "WORKFLOW-007",
+      "WORKFLOW-008",
+      "WORKFLOW-009",
+      "WORKFLOW-010"
+    ],
+    "must_have_features": [
+      "FEATURE-001",
+      "FEATURE-003",
+      "FEATURE-005",
+      "FEATURE-006",
+      "FEATURE-007",
+      "FEATURE-008",
+      "FEATURE-009",
+      "FEATURE-010",
+      "FEATURE-011",
+      "FEATURE-012",
+      "FEATURE-013",
+      "FEATURE-014",
+      "FEATURE-016",
+      "FEATURE-017",
+      "FEATURE-018",
+      "FEATURE-019",
+      "FEATURE-020",
+      "FEATURE-021",
+      "FEATURE-023"
+    ],
+    "launch_critical_systems": [
+      "authentication and RBAC",
+      "public trip page and contribution flow",
+      "organizer payout configuration",
+      "trip and private event ledger separation",
+      "receipt OCR and localization",
+      "media storage",
+      "audit logging"
+    ]
+  },
+  "feature_priorities": {
+    "must_have": [
+      "trip setup",
+      "member approvals",
+      "public contributions",
+      "trip expense tracking",
+      "receipt extraction and localization",
+      "private events",
+      "event expense tracking"
+    ],
+    "should_have": [
+      "notifications",
+      "public photo highlights",
+      "content moderation workflows"
+    ],
+    "deferred": [
+      "in-app peer-to-peer settlement",
+      "automatic event-to-trip ledger rollup",
+      "accounting-grade multi-currency handling",
+      "travel bookings",
+      "advanced dispute and fraud operations"
+    ]
+  },
+  "deferred_features": [
+    "peer-to-peer money movement inside private events",
+    "cross-event debt optimization",
+    "full reimbursement automation",
+    "booking integrations",
+    "advanced reputation or supporter social features"
+  ],
+  "optimization_recommendations": [
+    "Keep event payment tracking status-based rather than moving money in-app.",
+    "Treat translated text and converted currency as display aids only.",
+    "Require explicit organizer selection before any photos become public.",
+    "Keep trip and event ledgers visually and operationally separate in MVP."
+  ],
+  "complexity_reductions": [
+    "Single organizer payout owner for MVP",
+    "No automatic ledger rollups from private events",
+    "Display-only FX conversion",
+    "Member-only photos by default"
+  ],
+  "implementation_phases": {
+    "phase_1": [
+      "trip setup",
+      "membership control",
+      "public contribution page",
+      "trip expense ledger"
+    ],
+    "phase_2": [
+      "receipt OCR",
+      "translation and display currency conversion",
+      "bulletin updates",
+      "member album"
+    ],
+    "phase_3": [
+      "private events",
+      "event expense tracking",
+      "event payment status tracking",
+      "moderation and support hardening"
+    ]
+  }
+}

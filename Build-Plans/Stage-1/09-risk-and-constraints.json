@@ -1,0 +1,152 @@
+{
+  "stage": "Stage 1",
+  "status": "finalized",
+  "command": "Stage-1-product-initialization",
+  "artifact_id": "ARTIFACT-STAGE1-09",
+  "technical_risks": [
+    {
+      "risk_id": "RISK-001",
+      "risk": "OCR extraction quality may be inconsistent across international receipts.",
+      "domain": "technical",
+      "severity": "high",
+      "likelihood": "medium",
+      "status": "open",
+      "affected_ids": [
+        "WORKFLOW-005",
+        "CAP-007"
+      ],
+      "mitigation": "Keep manual correction in the core flow and preserve source receipt values.",
+      "owner_stage": "Stage 2",
+      "evidence_refs": [
+        "ARTIFACT-STAGE1-03",
+        "ARTIFACT-STAGE1-08"
+      ],
+      "next_action": "Validate OCR quality assumptions against common receipt formats and languages."
+    }
+  ],
+  "business_risks": [
+    {
+      "risk_id": "RISK-002",
+      "risk": "Users may not trust organizer-controlled pooled funds without strong transparency cues.",
+      "domain": "business",
+      "severity": "high",
+      "likelihood": "medium",
+      "status": "open",
+      "affected_ids": [
+        "WORKFLOW-003",
+        "BOUNDARY-004"
+      ],
+      "mitigation": "Emphasize ledger visibility, update cadence, and payout clarity in MVP design and validation.",
+      "owner_stage": "Stage 2",
+      "evidence_refs": [
+        "ARTIFACT-STAGE1-01",
+        "ARTIFACT-STAGE1-10"
+      ],
+      "next_action": "Validate trust expectations with prospective organizers and supporters."
+    }
+  ],
+  "compliance_risks": [
+    {
+      "risk_id": "RISK-003",
+      "risk": "Trip contributions and organizer payouts may trigger processor, refund, or KYC compliance requirements.",
+      "domain": "compliance",
+      "severity": "critical",
+      "likelihood": "medium",
+      "status": "open",
+      "affected_ids": [
+        "CAP-003",
+        "CAP-004",
+        "DEP-003",
+        "DEP-004"
+      ],
+      "mitigation": "Constrain MVP to supported payment patterns and define clear contribution and refund policies before launch.",
+      "owner_stage": "Stage 2",
+      "evidence_refs": [
+        "ARTIFACT-STAGE1-07"
+      ],
+      "next_action": "Validate payment model against processor capabilities and legal constraints."
+    }
+  ],
+  "operational_risks": [
+    {
+      "risk_id": "RISK-004",
+      "risk": "Users may confuse trip-wide pooled funds with private event payment tracking.",
+      "domain": "operational",
+      "severity": "high",
+      "likelihood": "high",
+      "status": "open",
+      "affected_ids": [
+        "WORKFLOW-009",
+        "WORKFLOW-010",
+        "FEATURE-021"
+      ],
+      "mitigation": "Keep ledgers separate by default and reflect scope clearly in naming, UI, and summaries.",
+      "owner_stage": "Stage 2",
+      "evidence_refs": [
+        "ARTIFACT-STAGE1-03",
+        "ARTIFACT-STAGE1-08"
+      ],
+      "next_action": "Test whether users understand ledger separation in concept validation."
+    },
+    {
+      "risk_id": "RISK-005",
+      "risk": "Public trip pages, photos, and updates may leak private information or require moderation intervention.",
+      "domain": "operational",
+      "severity": "high",
+      "likelihood": "medium",
+      "status": "open",
+      "affected_ids": [
+        "BOUNDARY-001",
+        "BOUNDARY-002",
+        "BOUNDARY-003",
+        "FEATURE-015",
+        "FEATURE-024"
+      ],
+      "mitigation": "Default to private content, require explicit organizer promotion for public highlights, and include moderation/report flows.",
+      "owner_stage": "Stage 2",
+      "evidence_refs": [
+        "ARTIFACT-STAGE1-06"
+      ],
+      "next_action": "Validate privacy expectations and public highlight policy assumptions."
+    },
+    {
+      "risk_id": "RISK-006",
+      "risk": "Translated receipt text or display-only currency conversion may be mistaken for authoritative financial truth.",
+      "domain": "operational",
+      "severity": "medium",
+      "likelihood": "medium",
+      "status": "open",
+      "affected_ids": [
+        "WORKFLOW-005",
+        "BOUNDARY-006",
+        "BOUNDARY-007"
+      ],
+      "mitigation": "Label localized values clearly and keep original data visible in the receipt record.",
+      "owner_stage": "Stage 2",
+      "evidence_refs": [
+        "ARTIFACT-STAGE1-06"
+      ],
+      "next_action": "Validate whether users understand source versus display data."
+    }
+  ],
+  "constraints": [
+    "MVP event payments are tracking-only, not in-app settlement.",
+    "Private event expenses do not auto-roll up into the trip ledger.",
+    "Currency conversion is for display only.",
+    "Trip photos are member-only by default, with organizer-controlled public highlights."
+  ],
+  "risk_severity": {
+    "critical": [
+      "RISK-003"
+    ],
+    "high": [
+      "RISK-001",
+      "RISK-002",
+      "RISK-004",
+      "RISK-005"
+    ],
+    "medium": [
+      "RISK-006"
+    ]
+  }
+}

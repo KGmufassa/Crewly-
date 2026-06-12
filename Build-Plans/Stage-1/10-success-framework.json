@@ -1,0 +1,53 @@
+{
+  "stage": "Stage 1",
+  "status": "finalized",
+  "command": "Stage-1-product-initialization",
+  "artifact_id": "ARTIFACT-STAGE1-10",
+  "success_criteria": [
+    {
+      "success_id": "SUCCESS-001",
+      "name": "Organizer activation",
+      "indicator": "Organizers can create a trip, configure visibility, and publish a contribution-ready page without external tooling."
+    },
+    {
+      "success_id": "SUCCESS-002",
+      "name": "Contribution conversion",
+      "indicator": "Supporters can understand the trip page and complete contributions with minimal friction."
+    },
+    {
+      "success_id": "SUCCESS-003",
+      "name": "Expense transparency",
+      "indicator": "Members can see clear trip-level expense status and understand event-level balances separately."
+    },
+    {
+      "success_id": "SUCCESS-004",
+      "name": "Receipt usability",
+      "indicator": "Users can upload, correct, and understand receipts even when source language or currency differs from the trip default."
+    },
+    {
+      "success_id": "SUCCESS-005",
+      "name": "Member participation",
+      "indicator": "Members actively contribute receipts, expenses, photos, and private event activity rather than relying only on the organizer."
+    }
+  ],
+  "early_metrics": [
+    "trip creation to member invite completion rate",
+    "public trip page to contribution conversion rate",
+    "percentage of expenses with attached receipts",
+    "manual correction rate after OCR extraction",
+    "translation or currency override usage rate",
+    "private event creation rate per active trip",
+    "album upload participation rate"
+  ],
+  "measurement_assumptions": [
+    "Users will engage more if receipts and balances are easier to understand across languages and currencies.",
+    "Public supporter trust improves when spending visibility and updates are consistent.",
+    "Private event functionality reduces noise in the main trip ledger."
+  ],
+  "validation_targets": [
+    "Trust in organizer-controlled payout model",
+    "Clarity of public versus private trip surfaces",
+    "Comprehension of source versus translated receipt data",
+    "Understanding of trip ledger versus private event ledger separation"
+  ]
+}

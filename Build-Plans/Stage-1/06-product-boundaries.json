@@ -1,0 +1,116 @@
+{
+  "stage": "Stage 1",
+  "status": "finalized",
+  "command": "Stage-1-product-initialization",
+  "artifact_id": "ARTIFACT-STAGE1-06",
+  "operational_boundaries": [
+    {
+      "boundary_id": "BOUNDARY-001",
+      "name": "Public Trip Surface",
+      "scope": "Selected trips that the organizer chooses to expose publicly.",
+      "includes": [
+        "trip summary",
+        "contribution call to action",
+        "selected bulletin updates",
+        "optional organizer-approved photo highlights"
+      ],
+      "excludes": [
+        "full itinerary",
+        "member-only album",
+        "full receipt details",
+        "private event data"
+      ]
+    },
+    {
+      "boundary_id": "BOUNDARY-002",
+      "name": "Private Trip Workspace",
+      "scope": "Approved trip members and organizer.",
+      "includes": [
+        "full trip details",
+        "trip expense ledger",
+        "member-only photos",
+        "receipt records",
+        "private trip updates"
+      ]
+    },
+    {
+      "boundary_id": "BOUNDARY-003",
+      "name": "Private Event Workspace",
+      "scope": "Selected subset of approved trip members.",
+      "includes": [
+        "event participant list",
+        "event expenses",
+        "event payment tracking",
+        "event receipts"
+      ],
+      "rule": "Events remain private to chosen participants and do not automatically surface in the main trip ledger."
+    },
+    {
+      "boundary_id": "BOUNDARY-004",
+      "name": "Organizer-Controlled Financial Surface",
+      "scope": "Trip-wide pooled contributions and payout ownership.",
+      "includes": [
+        "organizer payout account",
+        "trip contribution flow",
+        "trip-wide contribution visibility"
+      ]
+    },
+    {
+      "boundary_id": "BOUNDARY-005",
+      "name": "Member-Contributed Content Surface",
+      "scope": "Content and records uploaded by approved members.",
+      "includes": [
+        "receipts",
+        "expense entries",
+        "photos",
+        "private event records"
+      ],
+      "rule": "Members can contribute freely within the visibility constraints of the trip or event they are part of."
+    },
+    {
+      "boundary_id": "BOUNDARY-006",
+      "name": "Source-of-Truth Receipt Data",
+      "scope": "Original receipt record and extracted raw values.",
+      "includes": [
+        "original image",
+        "original text",
+        "original currency",
+        "original extracted totals"
+      ]
+    },
+    {
+      "boundary_id": "BOUNDARY-007",
+      "name": "Display-Translated Receipt Data",
+      "scope": "Localized view generated from original receipt data.",
+      "includes": [
+        "translated text",
+        "trip-default language presentation",
+        "display-only converted currency"
+      ],
+      "rule": "Localized display data never overrides original receipt values in MVP."
+    }
+  ],
+  "workflow_relationships": [
+    {
+      "workflow_id": "WORKFLOW-003",
+      "boundary_ids": [
+        "BOUNDARY-001",
+        "BOUNDARY-004"
+      ]
+    },
+    {
+      "workflow_id": "WORKFLOW-005",
+      "boundary_ids": [
+        "BOUNDARY-006",
+        "BOUNDARY-007"
+      ]
+    },
+    {
+      "workflow_id": "WORKFLOW-008",
+      "boundary_ids": [
+        "BOUNDARY-003",
+        "BOUNDARY-005"
+      ]
+    }
+  ]
+}
