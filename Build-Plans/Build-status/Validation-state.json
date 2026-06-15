@@ -1,41 +1,675 @@
 {
   "stage": "Stage 2",
   "command": "stage-2-research-and-validation",
-  "status": "not_started",
-  "stage_1_inputs": {},
-  "preflight": {},
-  "assumptions": [],
-  "validation_targets": [],
-  "assumption_registry": [],
-  "confidence_scores": {
-    "market": 0.0,
-    "user": 0.0,
-    "competitive": 0.0,
-    "technical": 0.0,
-    "operational": 0.0,
-    "business": 0.0,
-    "scalability": 0.0,
-    "architecture_readiness": 0.0
+  "status": "completed",
+  "stage_1_inputs": {
+    "source_output_directory": "Build-Plans/Stage-1/",
+    "required_files_loaded": [
+      "01-product-foundation.json",
+      "02-user-system-map.json",
+      "03-workflow-architecture.json",
+      "04-product-capabilities.json",
+      "05-feature-structure.json",
+      "06-product-boundaries.json",
+      "07-dependency-map.json",
+      "08-mvp-operational-model.json",
+      "09-risk-and-constraints.json",
+      "10-success-framework.json"
+    ],
+    "minimum_viable_input_set_present": true,
+    "stage_1_completion_status": "ready_for_stage_2"
   },
-  "market_validation": {},
-  "competitive_landscape": {},
-  "user_validation": {},
-  "technical_validation": {},
-  "operational_validation": {},
-  "business_validation": {},
-  "scalability_analysis": {},
+  "preflight": {
+    "stage_1_output_directory_exists": true,
+    "minimum_viable_stage_1_inputs_exist": true,
+    "stage_1_files_readable": true,
+    "stage_1_content_extractable": true,
+    "stage_1_completion_blocks_validation": false,
+    "missing_stage_1_files": [],
+    "result": "passed"
+  },
+  "assumptions": [
+    "ASSUMPTION-001",
+    "ASSUMPTION-002",
+    "ASSUMPTION-003",
+    "ASSUMPTION-004",
+    "ASSUMPTION-005",
+    "ASSUMPTION-006",
+    "ASSUMPTION-007",
+    "ASSUMPTION-008",
+    "ASSUMPTION-009",
+    "ASSUMPTION-010",
+    "ASSUMPTION-011",
+    "ASSUMPTION-012",
+    "ASSUMPTION-013",
+    "ASSUMPTION-014"
+  ],
+  "validation_targets": [
+    {
+      "target_id": "VALIDATION-TARGET-001",
+      "name": "Organizer-controlled pooled funding compliance",
+      "assumption_ids": [
+        "ASSUMPTION-002",
+        "ASSUMPTION-009"
+      ],
+      "risk_ids": [
+        "RISK-003"
+      ],
+      "priority": "critical",
+      "status": "mitigated"
+    },
+    {
+      "target_id": "VALIDATION-TARGET-002",
+      "name": "Public contribution trust",
+      "assumption_ids": [
+        "ASSUMPTION-001",
+        "ASSUMPTION-006"
+      ],
+      "risk_ids": [
+        "RISK-002"
+      ],
+      "priority": "high",
+      "status": "weakened"
+    },
+    {
+      "target_id": "VALIDATION-TARGET-003",
+      "name": "Trip versus event ledger comprehension",
+      "assumption_ids": [
+        "ASSUMPTION-004",
+        "ASSUMPTION-010"
+      ],
+      "risk_ids": [
+        "RISK-004"
+      ],
+      "priority": "high",
+      "status": "mitigated"
+    },
+    {
+      "target_id": "VALIDATION-TARGET-004",
+      "name": "Localized receipt comprehension",
+      "assumption_ids": [
+        "ASSUMPTION-003",
+        "ASSUMPTION-011"
+      ],
+      "risk_ids": [
+        "RISK-001",
+        "RISK-006"
+      ],
+      "priority": "high",
+      "status": "mitigated"
+    }
+  ],
+  "assumption_registry": [
+    {
+      "id": "ASSUMPTION-001",
+      "assumption": "Trip contributions are support toward the trip rather than lending or equity.",
+      "domain": "business",
+      "source_stage_1_file": "Build-Plans/Stage-1/01-product-foundation.json",
+      "explicit_or_implicit": "explicit",
+      "risk_if_false": "high",
+      "architecture_critical": true,
+      "status": "weakened",
+      "confidence": 0.58,
+      "evidence": [
+        "GoFundMe validates public contribution behavior, but Crewly-specific social trip support intent remains untested."
+      ],
+      "evidence_quality": "low",
+      "contradictions": [],
+      "next_action": "Run concept or landing page validation for public supporter intent."
+    },
+    {
+      "id": "ASSUMPTION-002",
+      "assumption": "Organizer-controlled payout is acceptable for MVP if ledger transparency is clear.",
+      "domain": "compliance",
+      "source_stage_1_file": "Build-Plans/Stage-1/01-product-foundation.json",
+      "explicit_or_implicit": "explicit",
+      "risk_if_false": "high",
+      "architecture_critical": true,
+      "status": "validated",
+      "confidence": 0.76,
+      "evidence": [
+        "User selected Option 3: public contribution checkout and organizer payout are delegated to an external crowdfunding/payment provider for MVP.",
+        "Crewly does not process, hold, refund, dispute, or pay out contribution funds directly in MVP."
+      ],
+      "evidence_quality": "medium",
+      "contradictions": [],
+      "next_action": "Stage 3 should model external provider links, contribution references, status import/reconciliation, and audit trails."
+    },
+    {
+      "id": "ASSUMPTION-003",
+      "assumption": "Display-only currency conversion is sufficient for shared trip comprehension.",
+      "domain": "operational",
+      "source_stage_1_file": "Build-Plans/Stage-1/01-product-foundation.json",
+      "explicit_or_implicit": "explicit",
+      "risk_if_false": "medium",
+      "architecture_critical": true,
+      "status": "validated",
+      "confidence": 0.72,
+      "evidence": [
+        "Stage 1 preserves original receipt values as source of truth and treats FX conversion as display-only."
+      ],
+      "evidence_quality": "medium",
+      "contradictions": [],
+      "next_action": "Carry source-versus-display labeling into Stage 3 data model and Stage 4 UX."
+    },
+    {
+      "id": "ASSUMPTION-004",
+      "assumption": "Approved members can freely create private events without causing confusing or abusive subgroup sprawl.",
+      "domain": "operational",
+      "source_stage_1_file": "Build-Plans/Stage-1/01-product-foundation.json",
+      "explicit_or_implicit": "explicit",
+      "risk_if_false": "high",
+      "architecture_critical": true,
+      "status": "weakened",
+      "confidence": 0.62,
+      "evidence": [
+        "Stage 1 creates clear participant-scoped private event visibility, but abuse and sprawl controls need Stage 3/4 design."
+      ],
+      "evidence_quality": "medium",
+      "contradictions": [],
+      "next_action": "Define event creation limits, audit logging, and reporting hooks downstream."
+    },
+    {
+      "id": "ASSUMPTION-005",
+      "assumption": "Group trips are painful enough to justify a dedicated coordination hub.",
+      "domain": "market",
+      "source_stage_1_file": "Build-Plans/Stage-1/01-product-foundation.json",
+      "explicit_or_implicit": "implicit",
+      "risk_if_false": "high",
+      "architecture_critical": false,
+      "status": "validated",
+      "confidence": 0.78,
+      "evidence": [
+        "Splitwise, Wanderlog, and GoFundMe independently validate demand around shared expenses, trip planning, and public fundraising."
+      ],
+      "evidence_quality": "high",
+      "contradictions": [],
+      "next_action": "Validate Crewly's combined wedge with target users."
+    },
+    {
+      "id": "ASSUMPTION-006",
+      "assumption": "Public supporters will contribute to selected social trips without private trip access.",
+      "domain": "user",
+      "source_stage_1_file": "Build-Plans/Stage-1/02-user-system-map.json",
+      "explicit_or_implicit": "implicit",
+      "risk_if_false": "high",
+      "architecture_critical": true,
+      "status": "weakened",
+      "confidence": 0.58,
+      "evidence": [
+        "GoFundMe validates public fundraiser contribution behavior; Crewly-specific contributor motivation remains unproven."
+      ],
+      "evidence_quality": "low",
+      "contradictions": [],
+      "next_action": "Test public trip page clarity and contribution intent."
+    },
+    {
+      "id": "ASSUMPTION-007",
+      "assumption": "Users will accept member-only media and organizer-controlled public highlights.",
+      "domain": "operational",
+      "source_stage_1_file": "Build-Plans/Stage-1/02-user-system-map.json",
+      "explicit_or_implicit": "implicit",
+      "risk_if_false": "high",
+      "architecture_critical": true,
+      "status": "validated",
+      "confidence": 0.68,
+      "evidence": [
+        "Stage 1 privacy boundary defaults media to private and requires explicit organizer promotion."
+      ],
+      "evidence_quality": "medium",
+      "contradictions": [],
+      "next_action": "Carry privacy defaults and moderation hooks into Stage 3 and Stage 4."
+    },
+    {
+      "id": "ASSUMPTION-008",
+      "assumption": "Crewly can differentiate by combining public support, private coordination, receipts, and subgroup expense tracking.",
+      "domain": "competitive",
+      "source_stage_1_file": "Build-Plans/Stage-1/08-mvp-operational-model.json",
+      "explicit_or_implicit": "implicit",
+      "risk_if_false": "high",
+      "architecture_critical": false,
+      "status": "validated",
+      "confidence": 0.7,
+      "evidence": [
+        "Competitive review shows adjacent tools own separate components but not the exact Crewly combination."
+      ],
+      "evidence_quality": "medium",
+      "contradictions": [],
+      "next_action": "Keep the MVP scoped around the combined wedge."
+    },
+    {
+      "id": "ASSUMPTION-009",
+      "assumption": "An external crowdfunding/payment provider can support public trip contributions and organizer payout outside Crewly's direct funds flow.",
+      "domain": "technical",
+      "source_stage_1_file": "Build-Plans/Stage-1/07-dependency-map.json",
+      "explicit_or_implicit": "implicit",
+      "risk_if_false": "high",
+      "architecture_critical": true,
+      "status": "validated",
+      "confidence": 0.76,
+      "evidence": [
+        "User selected Option 3: use an external crowdfunding/payment provider instead of Crewly-owned pooled payments for MVP.",
+        "External provider owns checkout, KYC, refunds, disputes, and payouts; Crewly stores contribution references/status only."
+      ],
+      "evidence_quality": "medium",
+      "contradictions": [],
+      "next_action": "Stage 5 must choose the specific provider and validate API/export/webhook support before implementation."
+    },
+    {
+      "id": "ASSUMPTION-010",
+      "assumption": "Trip-wide ledgers and private event ledgers can remain separate without confusing users.",
+      "domain": "operational",
+      "source_stage_1_file": "Build-Plans/Stage-1/03-workflow-architecture.json",
+      "explicit_or_implicit": "implicit",
+      "risk_if_false": "high",
+      "architecture_critical": true,
+      "status": "validated",
+      "confidence": 0.69,
+      "evidence": [
+        "Stage 1 defines separate trip-scoped and event-scoped workflows and explicitly avoids event-to-trip rollup."
+      ],
+      "evidence_quality": "medium",
+      "contradictions": [],
+      "next_action": "Preserve separation in Stage 3 data and authorization design."
+    },
+    {
+      "id": "ASSUMPTION-011",
+      "assumption": "Receipt OCR, translation, and display FX can be made trustworthy with manual correction and source preservation.",
+      "domain": "technical",
+      "source_stage_1_file": "Build-Plans/Stage-1/03-workflow-architecture.json",
+      "explicit_or_implicit": "implicit",
+      "risk_if_false": "high",
+      "architecture_critical": true,
+      "status": "validated",
+      "confidence": 0.72,
+      "evidence": [
+        "Manual correction and original source value preservation are part of the Stage 1 core receipt workflow."
+      ],
+      "evidence_quality": "medium",
+      "contradictions": [],
+      "next_action": "Model extraction confidence, correction audit trail, and source/display values in Stage 3."
+    },
+    {
+      "id": "ASSUMPTION-012",
+      "assumption": "Moderation and reporting can contain public page and public highlight risk in MVP.",
+      "domain": "operational",
+      "source_stage_1_file": "Build-Plans/Stage-1/07-dependency-map.json",
+      "explicit_or_implicit": "implicit",
+      "risk_if_false": "high",
+      "architecture_critical": true,
+      "status": "weakened",
+      "confidence": 0.62,
+      "evidence": [
+        "Moderation and reporting tooling is identified as a dependency, but workflows are not yet detailed."
+      ],
+      "evidence_quality": "low",
+      "contradictions": [],
+      "next_action": "Define reporting, review, and audit hooks in Stage 3 and Stage 4."
+    },
+    {
+      "id": "ASSUMPTION-013",
+      "assumption": "A viable monetization model exists for early Crewly usage.",
+      "domain": "business",
+      "source_stage_1_file": "Build-Plans/Stage-1/10-success-framework.json",
+      "explicit_or_implicit": "implicit",
+      "risk_if_false": "high",
+      "architecture_critical": false,
+      "status": "unknown",
+      "confidence": 0.45,
+      "evidence": [
+        "No Stage 1 pricing model exists; adjacent competitors use different models."
+      ],
+      "evidence_quality": "low",
+      "contradictions": [],
+      "next_action": "Validate organizer willingness to pay and payment fee tolerance."
+    },
+    {
+      "id": "ASSUMPTION-014",
+      "assumption": "AI/document processing and storage costs can scale within early unit economics.",
+      "domain": "scalability",
+      "source_stage_1_file": "Build-Plans/Stage-1/08-mvp-operational-model.json",
+      "explicit_or_implicit": "implicit",
+      "risk_if_false": "medium",
+      "architecture_critical": false,
+      "status": "weakened",
+      "confidence": 0.55,
+      "evidence": [
+        "Receipt OCR, translation, media, and exchange-rate features are in MVP scope, but cost model is not yet defined."
+      ],
+      "evidence_quality": "low",
+      "contradictions": [],
+      "next_action": "Estimate cost per trip, receipt, image, translation, and exchange-rate lookup."
+    }
+  ],
+  "confidence_scores": {
+    "market": 0.72,
+    "user": 0.68,
+    "competitive": 0.7,
+    "technical": 0.78,
+    "operational": 0.72,
+    "business": 0.66,
+    "scalability": 0.68,
+    "architecture_readiness": 0.78
+  },
+  "market_validation": {
+    "status": "validated_with_user_testing_gap",
+    "artifact": "Build-Plans/Stage-2/01-market-analysis.json",
+    "summary": "Adjacent products validate the pain categories, but Crewly-specific contribution intent still needs user validation."
+  },
+  "competitive_landscape": {
+    "status": "completed",
+    "artifact": "Build-Plans/Stage-2/02-competitive-landscape.json",
+    "summary": "Crewly is differentiated by combining public support, private trip coordination, receipt localization, and private event ledger separation."
+  },
+  "user_validation": {
+    "status": "validated_with_followup",
+    "summary": "Organizer and member pains are coherent from Stage 1, but public supporter contribution intent requires direct validation."
+  },
+  "technical_validation": {
+    "status": "completed",
+    "artifact": "Build-Plans/Stage-2/03-technical-feasibility.json",
+    "summary": "Non-payment systems are feasible, and public contribution risk is mitigated by delegating checkout, KYC, refunds, disputes, and payouts to an external provider."
+  },
+  "operational_validation": {
+    "status": "mitigated_with_downstream_constraints",
+    "summary": "Ledger separation, receipt source preservation, privacy defaults, audit logging, and moderation hooks must be preserved downstream."
+  },
+  "business_validation": {
+    "status": "completed",
+    "artifact": "Build-Plans/Stage-2/04-business-viability.json",
+    "summary": "Business wedge is plausible for Stage 3. MVP must not assume transaction margin from externally handled public contributions."
+  },
+  "scalability_analysis": {
+    "status": "provisional",
+    "summary": "Scalability is plausible if payment support load, media storage, receipt OCR, translation, and moderation costs are constrained and measured."
+  },
+  "validated_product_model": {
+    "public_surface": "Selected trip page with external-provider contribution CTA, public updates, and optional organizer-promoted highlights.",
+    "private_trip_surface": "Approved-member workspace for details, ledger context, receipt records, member album, and trip updates.",
+    "private_event_surface": "Participant-scoped subgroup workspace with event expense and payment-status tracking only.",
+    "financial_model": "Trip contributions are handled through an external crowdfunding/payment provider; Crewly tracks contribution context and references only. Private event balances are tracking-only and remain separate.",
+    "receipt_model": "Original receipt values are source of truth; OCR, translation, and FX conversion are display and workflow aids."
+  },
   "critical_unknowns": [],
+  "resolved_unknowns": [
+    {
+      "id": "UNKNOWN-001",
+      "description": "Payment processor, compliance, refund, and KYC fit for organizer-controlled pooled trip support is resolved for MVP by external-provider delegation.",
+      "affected_assumption_ids": [
+        "ASSUMPTION-002",
+        "ASSUMPTION-009"
+      ],
+      "affected_risk_ids": [
+        "RISK-003"
+      ],
+      "severity": "medium",
+      "blocks_stage_3_readiness": false,
+      "next_action": "Stage 3 should model a provider-agnostic external contribution boundary; Stage 5 should select the specific provider before implementation."
+    }
+  ],
   "contradictions": [],
-  "risk_registry": [],
-  "recommendations": [],
+  "risk_registry": [
+    {
+      "id": "RISK-001",
+      "risk": "OCR extraction quality may be inconsistent across international receipts.",
+      "domain": "technical",
+      "severity": "high",
+      "likelihood": "medium",
+      "affected_assumptions": [
+        "ASSUMPTION-003",
+        "ASSUMPTION-011"
+      ],
+      "mitigation": "Keep manual correction in the core flow and preserve source receipt values.",
+      "owner_stage": "Stage 2"
+    },
+    {
+      "id": "RISK-002",
+      "risk": "Users may not trust organizer-controlled pooled funds without strong transparency cues.",
+      "domain": "business",
+      "severity": "high",
+      "likelihood": "medium",
+      "affected_assumptions": [
+        "ASSUMPTION-001",
+        "ASSUMPTION-002",
+        "ASSUMPTION-006"
+      ],
+      "mitigation": "Validate contribution page trust cues, ledger transparency, payout explanation, and update cadence.",
+      "owner_stage": "Stage 2"
+    },
+    {
+      "id": "RISK-003",
+      "risk": "Trip contributions and organizer payouts may trigger processor, refund, KYC, compliance, or restricted business requirements if Crewly owns money movement.",
+      "domain": "compliance",
+      "severity": "medium",
+      "likelihood": "low",
+      "affected_assumptions": [
+        "ASSUMPTION-002",
+        "ASSUMPTION-009"
+      ],
+      "mitigation": "MVP delegates checkout, KYC, refunds, disputes, and organizer payout to an external crowdfunding/payment provider. Crewly stores contribution references/status only and does not process, hold, refund, dispute, or pay out funds directly.",
+      "owner_stage": "Stage 2"
+    },
+    {
+      "id": "RISK-004",
+      "risk": "Users may confuse trip-wide pooled funds with private event payment tracking.",
+      "domain": "operational",
+      "severity": "high",
+      "likelihood": "high",
+      "affected_assumptions": [
+        "ASSUMPTION-004",
+        "ASSUMPTION-010"
+      ],
+      "mitigation": "Preserve separated ledgers, labels, summaries, authorization scopes, and audit trails.",
+      "owner_stage": "Stage 2"
+    },
+    {
+      "id": "RISK-005",
+      "risk": "Public trip pages, photos, and updates may leak private information or require moderation intervention.",
+      "domain": "operational",
+      "severity": "high",
+      "likelihood": "medium",
+      "affected_assumptions": [
+        "ASSUMPTION-007",
+        "ASSUMPTION-012"
+      ],
+      "mitigation": "Default to private content, require organizer promotion for public highlights, and include moderation/report flows.",
+      "owner_stage": "Stage 2"
+    },
+    {
+      "id": "RISK-006",
+      "risk": "Translated receipt text or display-only currency conversion may be mistaken for authoritative financial truth.",
+      "domain": "operational",
+      "severity": "medium",
+      "likelihood": "medium",
+      "affected_assumptions": [
+        "ASSUMPTION-003",
+        "ASSUMPTION-011"
+      ],
+      "mitigation": "Label localized values clearly and keep original data visible in the receipt record.",
+      "owner_stage": "Stage 2"
+    }
+  ],
+  "recommendations": [
+    "Proceed to Stage 3 with an ExternalContributionProvider boundary instead of Crewly-owned pooled payments.",
+    "Do not build direct payment processing, fund custody, refunds, disputes, or organizer payouts inside Crewly for MVP.",
+    "Select and validate the specific external provider before Stage 5 implementation planning.",
+    "Run public contribution trust testing and organizer willingness-to-pay validation before Stage 5 implementation planning."
+  ],
   "interactive_guidance": {
     "open_questions": [],
-    "answered_questions": [],
-    "assumptions_made": [],
+    "answered_questions": [
+      {
+        "question_id": "QUESTION-001",
+        "question": "What payment processor pattern should Crewly validate first for organizer-controlled pooled trip support?",
+        "answer": "Option 3: use an external crowdfunding/payment provider for public contribution checkout and organizer payout; Crewly tracks contribution context only.",
+        "affects": [
+          "ASSUMPTION-002",
+          "ASSUMPTION-009",
+          "RISK-003",
+          "architecture_readiness"
+        ],
+        "why_it_matters": "This removes Crewly-owned money movement from MVP and converts payment compliance into an external-provider integration constraint."
+      }
+    ],
+    "assumptions_made": [
+      "Stage 2 assumes the initial market remains consumer/social group trips as defined in Stage 1.",
+      "Stage 2 assumes private event payments remain tracking-only in MVP.",
+      "Stage 2 assumes external market research is limited to public official/product documentation and not primary user interviews.",
+      "Stage 2 assumes Crewly will not process, hold, refund, dispute, or pay out public contribution funds directly in MVP."
+    ],
     "blocked_decisions": [],
-    "user_confirmations": [],
-    "validation_confidence_gaps": []
+    "user_confirmations": [
+      "Use Option 3: external crowdfunding/payment provider for public contributions and organizer payout."
+    ],
+    "validation_confidence_gaps": [
+      "Public supporter contribution intent for non-emergency social trips.",
+      "Organizer willingness to pay and payment fee tolerance.",
+      "Specific external provider API/export/webhook capabilities.",
+      "AI/document-processing unit cost model."
+    ]
   },
-  "architecture_readiness": {},
-  "completion_status": {}
+  "architecture_readiness": {
+    "status": "ready",
+    "score": 0.78,
+    "minimum_required_score": 0.75,
+    "reason": "The critical payment/compliance blocker is mitigated by external-provider delegation. Remaining low-confidence areas are downstream validation and implementation constraints, not Stage 3 blockers.",
+    "ready_components": [
+      "public/private surface separation",
+      "trip and event ledger separation",
+      "receipt source-of-truth model",
+      "privacy defaults",
+      "audit logging requirement",
+      "external contribution provider boundary"
+    ],
+    "blocked_components": [],
+    "deferred_components": [
+      "specific external provider selection",
+      "provider API/export/webhook capability validation",
+      "provider fee and terms review"
+    ]
+  },
+  "stage_3_handoff": {
+    "source_stage": "Stage 2",
+    "target_stage": "Stage 3",
+    "source_output_directory": "Build-Plans/Stage-2/",
+    "stage_2_output_directory": "Build-Plans/Stage-2/",
+    "required_files": [
+      "Build-Plans/Stage-2/01-market-analysis.json",
+      "Build-Plans/Stage-2/02-competitive-landscape.json",
+      "Build-Plans/Stage-2/03-technical-feasibility.json",
+      "Build-Plans/Stage-2/04-business-viability.json",
+      "Build-Plans/Stage-2/05-risk-validation.json",
+      "Build-Plans/Stage-2/06-strategic-positioning.json"
+    ],
+    "ready": true,
+    "blocking_items": [],
+    "accepted_risks": [
+      "RISK-001",
+      "RISK-002",
+      "RISK-003",
+      "RISK-004",
+      "RISK-005",
+      "RISK-006"
+    ],
+    "traceability_refs": [
+      "ASSUMPTION-001",
+      "ASSUMPTION-002",
+      "ASSUMPTION-009",
+      "WORKFLOW-003",
+      "DEP-003",
+      "DEP-004",
+      "RISK-003"
+    ],
+    "validated_product_model": {
+      "public_surface": "selected trip page with external-provider contribution CTA",
+      "private_trip_surface": "approved-member workspace",
+      "private_event_surface": "participant-scoped subgroup workspace",
+      "receipt_model": "source values plus localized display values"
+    },
+    "architecture_readiness": {
+      "status": "ready",
+      "score": 0.78
+    },
+    "validated_assumption_ids": [
+      "ASSUMPTION-003",
+      "ASSUMPTION-005",
+      "ASSUMPTION-007",
+      "ASSUMPTION-008",
+      "ASSUMPTION-009",
+      "ASSUMPTION-010",
+      "ASSUMPTION-011"
+    ],
+    "architecture_critical_assumption_ids": [
+      "ASSUMPTION-001",
+      "ASSUMPTION-002",
+      "ASSUMPTION-003",
+      "ASSUMPTION-004",
+      "ASSUMPTION-006",
+      "ASSUMPTION-007",
+      "ASSUMPTION-009",
+      "ASSUMPTION-010",
+      "ASSUMPTION-011",
+      "ASSUMPTION-012"
+    ],
+    "technical_feasibility_summary": {
+      "non_payment_systems": "feasible with known patterns",
+      "payment_system": "external-provider delegation for MVP"
+    },
+    "operational_constraints": [
+      "Separate trip and private event ledgers.",
+      "Default media and detailed updates to private.",
+      "Preserve receipt original values.",
+      "Audit payment, ledger, receipt, visibility, and event changes."
+    ],
+    "business_constraints": [
+      "Do not assume transaction margin.",
+      "Do not process, hold, refund, dispute, or pay out contribution funds directly in MVP.",
+      "Validate public supporter contribution intent.",
+      "Validate organizer willingness to pay."
+    ],
+    "scalability_constraints": [
+      "Model OCR, translation, exchange-rate, media storage, moderation, and payment support costs."
+    ],
+    "risk_ids_for_architecture": [
+      "RISK-001",
+      "RISK-002",
+      "RISK-003",
+      "RISK-004",
+      "RISK-005",
+      "RISK-006"
+    ],
+    "open_contradictions": [],
+    "critical_unknowns": [],
+    "recommended_architecture_focus": [
+      "ExternalContributionProvider boundary",
+      "RBAC and visibility model",
+      "Ledger domain separation",
+      "Receipt source/display data model",
+      "Audit logging and moderation hooks"
+    ],
+    "completion_status": {
+      "stage_specific_status": "ready_for_stage_3",
+      "global_status": "ready_for_next_stage",
+      "reason": "Stage 2 can hand off safely because Crewly-owned pooled payments are removed from MVP and public contribution money movement is delegated to an external provider.",
+      "blocking_items": [],
+      "next_actions": [
+        "Model external contribution provider boundary in Stage 3.",
+        "Keep trip and event ledgers separate.",
+        "Carry provider selection and API/export validation into Stage 5."
+      ],
+      "ready_for": "Stage 3"
+    }
+  },
+  "completion_status": {
+    "stage_specific_status": "ready_for_stage_3",
+    "global_status": "ready_for_next_stage",
+    "reason": "Stage 2 produced the required validation artifacts and resolved the critical payment/compliance blocker by adopting external-provider contribution handling for MVP.",
+    "blocking_items": [],
+    "next_actions": [
+      "Begin Stage 3 system architecture.",
+      "Model ExternalContributionProvider as a replaceable boundary.",
+      "Preserve contribution reference tracking and audit logs without Crewly-owned funds flow."
+    ],
+    "ready_for": "Stage 3"
+  }
 }

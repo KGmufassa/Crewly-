@@ -1,0 +1,139 @@
+{
+  "stage": "Stage 4",
+  "artifact_id": "ARTIFACT-STAGE4-02",
+  "name": "Interaction Architecture",
+  "status": "completed",
+  "related_stage_1_workflows": [
+    "WORKFLOW-001",
+    "WORKFLOW-003",
+    "WORKFLOW-005",
+    "WORKFLOW-008",
+    "WORKFLOW-009",
+    "WORKFLOW-010"
+  ],
+  "related_stage_3_constraints": [
+    "role-scoped application APIs",
+    "centralized authorization checks",
+    "async processing for OCR, translation, FX, notifications, and provider sync"
+  ],
+  "ux_decisions": [
+    {
+      "decision_id": "UX-DEC-003",
+      "decision": "Use scoped navigation with persistent trip context and nested private event context.",
+      "rationale": "Users need to understand whether they are acting in public, trip-private, or event-private scope."
+    },
+    {
+      "decision_id": "UX-DEC-004",
+      "decision": "Use explicit confirmation before public publication or public media promotion.",
+      "rationale": "Stage 2 and Stage 3 identified privacy leakage as a high-risk area."
+    },
+    {
+      "decision_id": "UX-DEC-005",
+      "decision": "Represent async work with pending, failed, retry, and manual fallback states.",
+      "rationale": "Receipt processing and provider sync are queue-backed and may fail independently."
+    }
+  ],
+  "navigation_model": {
+    "public_navigation": [
+      "public trip page",
+      "public updates",
+      "external contribution handoff"
+    ],
+    "member_navigation": [
+      "trip overview",
+      "members",
+      "trip ledger",
+      "receipts",
+      "bulletins",
+      "album",
+      "private events"
+    ],
+    "private_event_navigation": [
+      "event overview",
+      "participants",
+      "event ledger",
+      "payment status"
+    ],
+    "admin_navigation": [
+      "reports",
+      "audit search",
+      "public content review",
+      "provider reference review"
+    ]
+  },
+  "interaction_patterns": [
+    {
+      "pattern_id": "INTERACTION-001",
+      "name": "Scope Banner",
+      "used_for": [
+        "public trip",
+        "private trip",
+        "private event"
+      ],
+      "behavior": "Show the current visibility and financial scope before sensitive actions."
+    },
+    {
+      "pattern_id": "INTERACTION-002",
+      "name": "External Provider Handoff",
+      "used_for": [
+        "public contribution CTA"
+      ],
+      "behavior": "Explain the user is leaving Crewly and that contribution processing is handled by the provider."
+    },
+    {
+      "pattern_id": "INTERACTION-003",
+      "name": "Async Job Status",
+      "used_for": [
+        "receipt OCR",
+        "translation",
+        "FX display",
+        "provider sync"
+      ],
+      "behavior": "Show pending, complete, failed, retry, and manual fallback controls."
+    },
+    {
+      "pattern_id": "INTERACTION-004",
+      "name": "Permission-Aware Action States",
+      "used_for": [
+        "ledger write",
+        "event access",
+        "public promotion",
+        "admin moderation"
+      ],
+      "behavior": "Hide unavailable actions only when non-discoverable; otherwise show disabled action with reason."
+    }
+  ],
+  "feedback_patterns": [
+    "inline validation for forms",
+    "toast or activity feed confirmation for low-risk saves",
+    "modal confirmation for public publish/promote actions",
+    "persistent status cards for async processing",
+    "clear permission-denied explanation with next available action"
+  ],
+  "recovery_patterns": [
+    "save draft",
+    "retry external/async job",
+    "manual receipt entry",
+    "manual contribution reconciliation",
+    "revert public content to member-only",
+    "contact admin/support path for reports"
+  ],
+  "risks_and_constraints": [
+    {
+      "risk_id": "UX-RISK-002",
+      "risk": "Nested private event context may be confused with trip-wide context.",
+      "severity": "high",
+      "mitigation": "Use persistent event scope labeling and separate ledger summaries."
+    },
+    {
+      "risk_id": "UX-RISK-003",
+      "risk": "Async processing may look broken if no durable status is visible.",
+      "severity": "medium",
+      "mitigation": "Use status cards and retry/manual fallback actions."
+    }
+  ],
+  "unresolved_questions": [],
+  "stage_5_handoff_notes": [
+    "Implement reusable scope banner, provider handoff, async status, and permission reason components."
+  ]
+}

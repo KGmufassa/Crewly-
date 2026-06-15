@@ -1,0 +1,229 @@
+{
+  "stage": "Stage 3",
+  "artifact_id": "ARTIFACT-STAGE3-02",
+  "name": "Service Architecture",
+  "status": "completed",
+  "related_stage_1_files": [
+    "Build-Plans/Stage-1/04-product-capabilities.json",
+    "Build-Plans/Stage-1/05-feature-structure.json"
+  ],
+  "related_stage_2_assumption_ids": [
+    "ASSUMPTION-002",
+    "ASSUMPTION-009",
+    "ASSUMPTION-010",
+    "ASSUMPTION-011",
+    "ASSUMPTION-012"
+  ],
+  "architecture_decisions": [
+    {
+      "decision_id": "ARCH-DEC-004",
+      "decision": "Use modular monolith service boundaries for MVP with explicit domain ownership.",
+      "rationale": "The MVP benefits from clear boundaries without distributed-service overhead."
+    },
+    {
+      "decision_id": "ARCH-DEC-005",
+      "decision": "Keep Contribution Reference separate from Ledger.",
+      "rationale": "Public contribution provider references are not trip expenses and must not mix with private event balances."
+    }
+  ],
+  "services": [
+    {
+      "service_id": "SERVICE-001",
+      "name": "IdentityAccessService",
+      "capability_ids": [
+        "CAP-002"
+      ],
+      "responsibilities": [
+        "authentication integration",
+        "role and permission enforcement",
+        "membership approval state",
+        "event participant access checks"
+      ],
+      "owned_data": [
+        "User",
+        "Membership",
+        "RoleGrant",
+        "EventParticipant"
+      ]
+    },
+    {
+      "service_id": "SERVICE-002",
+      "name": "TripService",
+      "capability_ids": [
+        "CAP-001",
+        "CAP-009"
+      ],
+      "responsibilities": [
+        "trip creation",
+        "visibility configuration",
+        "trip metadata",
+        "bulletin updates"
+      ],
+      "owned_data": [
+        "Trip",
+        "TripVisibility",
+        "BulletinPost"
+      ]
+    },
+    {
+      "service_id": "SERVICE-003",
+      "name": "ContributionReferenceService",
+      "capability_ids": [
+        "CAP-003",
+        "CAP-004"
+      ],
+      "responsibilities": [
+        "external provider campaign/reference storage",
+        "contribution status import",
+        "manual reconciliation",
+        "provider event audit"
+      ],
+      "owned_data": [
+        "ContributionCampaign",
+        "ExternalContributionReference",
+        "ProviderSyncEvent"
+      ]
+    },
+    {
+      "service_id": "SERVICE-004",
+      "name": "LedgerService",
+      "capability_ids": [
+        "CAP-005",
+        "CAP-006"
+      ],
+      "responsibilities": [
+        "trip expense entries",
+        "private event ledgers",
+        "payment status tracking",
+        "separate balance summaries"
+      ],
+      "owned_data": [
+        "TripExpense",
+        "PrivateEvent",
+        "EventExpense",
+        "PaymentStatus"
+      ]
+    },
+    {
+      "service_id": "SERVICE-005",
+      "name": "ReceiptProcessingService",
+      "capability_ids": [
+        "CAP-007",
+        "CAP-008"
+      ],
+      "responsibilities": [
+        "receipt upload metadata",
+        "OCR job orchestration",
+        "translation job orchestration",
+        "display FX derivation",
+        "manual correction audit"
+      ],
+      "owned_data": [
+        "Receipt",
+        "ReceiptExtraction",
+        "ReceiptTranslation",
+        "CurrencyDisplayValue"
+      ]
+    },
+    {
+      "service_id": "SERVICE-006",
+      "name": "MediaService",
+      "capability_ids": [
+        "CAP-010"
+      ],
+      "responsibilities": [
+        "member-only media metadata",
+        "public highlight promotion",
+        "media storage references"
+      ],
+      "owned_data": [
+        "MediaAsset",
+        "PublicHighlight"
+      ]
+    },
+    {
+      "service_id": "SERVICE-007",
+      "name": "NotificationService",
+      "capability_ids": [
+        "CAP-011"
+      ],
+      "responsibilities": [
+        "invite notifications",
+        "trip update notifications",
+        "event notifications",
+        "provider sync notifications"
+      ],
+      "owned_data": [
+        "NotificationPreference",
+        "NotificationDelivery"
+      ]
+    },
+    {
+      "service_id": "SERVICE-008",
+      "name": "ModerationAuditService",
+      "capability_ids": [
+        "CAP-012"
+      ],
+      "responsibilities": [
+        "content reports",
+        "moderation decisions",
+        "audit event append",
+        "support lookup"
+      ],
+      "owned_data": [
+        "Report",
+        "ModerationAction",
+        "AuditEvent"
+      ]
+    }
+  ],
+  "communication_patterns": [
+    {
+      "pattern_id": "COMM-001",
+      "pattern": "request-response",
+      "used_for": [
+        "trip CRUD",
+        "membership approval",
+        "ledger entry creation",
+        "visibility updates"
+      ]
+    },
+    {
+      "pattern_id": "COMM-002",
+      "pattern": "queue-backed async jobs",
+      "used_for": [
+        "receipt OCR",
+        "receipt translation",
+        "FX refresh",
+        "notification delivery",
+        "external provider synchronization"
+      ]
+    },
+    {
+      "pattern_id": "COMM-003",
+      "pattern": "append-only audit events",
+      "used_for": [
+        "permission changes",
+        "visibility changes",
+        "ledger changes",
+        "receipt corrections",
+        "provider sync events"
+      ]
+    }
+  ],
+  "risks_and_constraints": [
+    {
+      "risk_id": "ARCH-RISK-002",
+      "risk": "Modular monolith boundaries may blur without enforcement.",
+      "severity": "medium",
+      "mitigation": "Use explicit domain modules, service-owned repositories, and cross-domain APIs."
+    }
+  ],
+  "unresolved_questions": [],
+  "stage_4_handoff_notes": [
+    "UX should expose separate surfaces that align with TripService, LedgerService, ReceiptProcessingService, and MediaService responsibilities."
+  ],
+  "stage_5_handoff_notes": [
+    "Implementation tickets should map to service IDs and avoid cross-domain data writes."
+  ]
+}

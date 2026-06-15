@@ -1,0 +1,119 @@
+{
+  "stage": "Stage 3",
+  "artifact_id": "ARTIFACT-STAGE3-05",
+  "name": "Integration Architecture",
+  "status": "completed",
+  "related_stage_1_files": [
+    "Build-Plans/Stage-1/07-dependency-map.json"
+  ],
+  "related_stage_2_assumption_ids": [
+    "ASSUMPTION-002",
+    "ASSUMPTION-009",
+    "ASSUMPTION-011",
+    "ASSUMPTION-014"
+  ],
+  "architecture_decisions": [
+    {
+      "decision_id": "ARCH-DEC-009",
+      "decision": "Use provider adapters for all external services.",
+      "rationale": "External contribution, OCR, translation, FX, storage, and notification choices may change before implementation."
+    },
+    {
+      "decision_id": "ARCH-DEC-010",
+      "decision": "Provider failures degrade to pending/manual states rather than blocking core trip access.",
+      "rationale": "External services are not fully under Crewly control."
+    }
+  ],
+  "integrations": [
+    {
+      "integration_id": "INTEGRATION-001",
+      "name": "ExternalContributionProvider",
+      "dependency_ids": [
+        "DEP-003",
+        "DEP-004"
+      ],
+      "ownership": "ContributionReferenceService",
+      "auth_model": "provider-specific OAuth/API key/webhook secret, selected in Stage 5",
+      "data_exchanged": [
+        "campaign URL or checkout URL",
+        "provider campaign ID",
+        "contribution reference ID",
+        "status",
+        "display amount",
+        "timestamp"
+      ],
+      "fallback": "manual provider link and manual reconciliation",
+      "constraints": [
+        "Crewly does not process funds directly",
+        "Crewly does not initiate refunds or payouts in MVP"
+      ]
+    },
+    {
+      "integration_id": "INTEGRATION-002",
+      "name": "OCRProvider",
+      "dependency_ids": [
+        "DEP-006"
+      ],
+      "ownership": "ReceiptProcessingService",
+      "fallback": "manual receipt field entry"
+    },
+    {
+      "integration_id": "INTEGRATION-003",
+      "name": "TranslationProvider",
+      "dependency_ids": [
+        "DEP-007"
+      ],
+      "ownership": "ReceiptProcessingService",
+      "fallback": "show original text only"
+    },
+    {
+      "integration_id": "INTEGRATION-004",
+      "name": "ExchangeRateProvider",
+      "dependency_ids": [
+        "DEP-008"
+      ],
+      "ownership": "ReceiptProcessingService",
+      "fallback": "hide converted display value and preserve original currency"
+    },
+    {
+      "integration_id": "INTEGRATION-005",
+      "name": "NotificationProvider",
+      "dependency_ids": [
+        "DEP-009"
+      ],
+      "ownership": "NotificationService",
+      "fallback": "in-app notification state"
+    },
+    {
+      "integration_id": "INTEGRATION-006",
+      "name": "ObjectStorageProvider",
+      "dependency_ids": [
+        "DEP-005"
+      ],
+      "ownership": "ReceiptProcessingService and MediaService",
+      "fallback": "retry upload and mark asset pending"
+    }
+  ],
+  "risks_and_constraints": [
+    {
+      "risk_id": "ARCH-RISK-005",
+      "risk": "External contribution provider may not support reliable automated contribution import.",
+      "severity": "medium",
+      "mitigation": "Require manual reconciliation path and avoid architecture dependency on real-time provider sync."
+    }
+  ],
+  "unresolved_questions": [
+    {
+      "question_id": "ARCH-Q-001",
+      "question": "Which external contribution provider will be selected for implementation?",
+      "classification": "stage_5_decision",
+      "blocks_stage_3": false
+    }
+  ],
+  "stage_4_handoff_notes": [
+    "UX should support pending/synced/manual contribution states."
+  ],
+  "stage_5_handoff_notes": [
+    "Provider selection is required before implementation of automated contribution import."
+  ]
+}

@@ -1,0 +1,134 @@
+{
+  "stage": "Stage 3",
+  "artifact_id": "ARTIFACT-STAGE3-01",
+  "name": "System Topology",
+  "status": "completed",
+  "related_stage_1_files": [
+    "Build-Plans/Stage-1/03-workflow-architecture.json",
+    "Build-Plans/Stage-1/04-product-capabilities.json",
+    "Build-Plans/Stage-1/07-dependency-map.json",
+    "Build-Plans/Stage-1/08-mvp-operational-model.json"
+  ],
+  "related_stage_2_assumption_ids": [
+    "ASSUMPTION-002",
+    "ASSUMPTION-003",
+    "ASSUMPTION-007",
+    "ASSUMPTION-009",
+    "ASSUMPTION-010",
+    "ASSUMPTION-011",
+    "ASSUMPTION-012"
+  ],
+  "architecture_decisions": [
+    {
+      "decision_id": "ARCH-DEC-001",
+      "decision": "Use one member-facing web application plus an admin operations surface backed by modular backend domains.",
+      "rationale": "MVP workflows share trip, member, ledger, media, and receipt contexts; separate admin capability is required for moderation and support."
+    },
+    {
+      "decision_id": "ARCH-DEC-002",
+      "decision": "Model public contributions through an ExternalContributionProvider boundary instead of Crewly-owned payment processing.",
+      "rationale": "Stage 2 mitigated RISK-003 by delegating checkout, KYC, refunds, disputes, and payouts externally."
+    },
+    {
+      "decision_id": "ARCH-DEC-003",
+      "decision": "Run OCR, translation, FX lookup, notifications, and provider reconciliation as asynchronous background work.",
+      "rationale": "These workflows depend on external services, can fail independently, and should not block core trip interactions."
+    }
+  ],
+  "system_topology": {
+    "frontend_systems": [
+      {
+        "system_id": "SYSTEM-001",
+        "name": "Crewly Web App",
+        "users": [
+          "USER-001",
+          "USER-002",
+          "USER-003"
+        ],
+        "responsibilities": [
+          "public trip pages",
+          "private trip workspace",
+          "private event workspace",
+          "receipt upload and correction",
+          "member album",
+          "bulletin updates"
+        ]
+      },
+      {
+        "system_id": "SYSTEM-002",
+        "name": "Admin Operations Console",
+        "users": [
+          "USER-004"
+        ],
+        "responsibilities": [
+          "content reports",
+          "moderation review",
+          "audit lookup",
+          "payment-provider reference support"
+        ]
+      }
+    ],
+    "backend_systems": [
+      "Identity and Access Domain",
+      "Trip Coordination Domain",
+      "Contribution Reference Domain",
+      "Ledger Domain",
+      "Receipt Processing Domain",
+      "Media and Bulletin Domain",
+      "Notification Domain",
+      "Moderation and Audit Domain"
+    ],
+    "data_systems": [
+      "relational application database",
+      "object storage for receipts and media",
+      "background job queue",
+      "audit event store"
+    ],
+    "external_systems": [
+      "ExternalContributionProvider",
+      "OCR provider",
+      "translation provider",
+      "exchange-rate provider",
+      "email or push notification provider"
+    ]
+  },
+  "boundaries": [
+    {
+      "boundary_id": "BOUNDARY-ARCH-001",
+      "name": "Public/private visibility boundary",
+      "description": "Public trip content is explicitly selected and never inferred from private trip state."
+    },
+    {
+      "boundary_id": "BOUNDARY-ARCH-002",
+      "name": "External contribution boundary",
+      "description": "Crewly stores provider references and statuses only; money movement remains outside Crewly."
+    },
+    {
+      "boundary_id": "BOUNDARY-ARCH-003",
+      "name": "Ledger scope boundary",
+      "description": "Trip contribution references, trip expenses, and private event expenses remain separate domains."
+    },
+    {
+      "boundary_id": "BOUNDARY-ARCH-004",
+      "name": "Receipt source/display boundary",
+      "description": "Original receipt values are source of truth; OCR, translation, and FX values are derived display data."
+    }
+  ],
+  "risks_and_constraints": [
+    {
+      "risk_id": "ARCH-RISK-001",
+      "risk": "External provider selection may limit contribution status import or reconciliation.",
+      "severity": "medium",
+      "mitigation": "Design provider-agnostic references with manual reconciliation fallback."
+    }
+  ],
+  "unresolved_questions": [],
+  "stage_4_handoff_notes": [
+    "UX must distinguish public trip page, private trip workspace, and private event workspace.",
+    "Contribution CTA should clearly communicate external-provider checkout."
+  ],
+  "stage_5_handoff_notes": [
+    "Select concrete ExternalContributionProvider before implementation.",
+    "Implement async workers for receipts, notifications, and provider reconciliation."
+  ]
+}

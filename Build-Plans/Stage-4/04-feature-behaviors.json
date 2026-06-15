@@ -1,0 +1,229 @@
+{
+  "stage": "Stage 4",
+  "artifact_id": "ARTIFACT-STAGE4-04",
+  "name": "Feature Behaviors",
+  "status": "completed",
+  "related_stage_1_features": [
+    "FEATURE-001",
+    "FEATURE-002",
+    "FEATURE-003",
+    "FEATURE-004",
+    "FEATURE-005",
+    "FEATURE-006",
+    "FEATURE-007",
+    "FEATURE-008",
+    "FEATURE-009",
+    "FEATURE-010",
+    "FEATURE-011",
+    "FEATURE-012",
+    "FEATURE-013",
+    "FEATURE-014",
+    "FEATURE-015",
+    "FEATURE-016",
+    "FEATURE-017",
+    "FEATURE-018",
+    "FEATURE-019",
+    "FEATURE-020",
+    "FEATURE-021",
+    "FEATURE-022",
+    "FEATURE-023",
+    "FEATURE-024"
+  ],
+  "related_stage_3_constraints": [
+    "Every write API emits an AuditEvent.",
+    "Private event APIs require event participant authorization.",
+    "Contribution APIs must use external-reference terminology and cannot expose Crewly payout controls.",
+    "Receipt correction APIs must preserve prior extracted and corrected values."
+  ],
+  "ux_decisions": [
+    {
+      "decision_id": "UX-DEC-007",
+      "decision": "Specify launch-critical feature behavior by workflow group rather than isolated controls.",
+      "rationale": "Feature behavior must support complete journeys and Stage 5 implementation planning."
+    }
+  ],
+  "behavior_groups": [
+    {
+      "behavior_group_id": "BEHAVIOR-GROUP-001",
+      "name": "Trip Setup and Access",
+      "feature_ids": [
+        "FEATURE-001",
+        "FEATURE-002",
+        "FEATURE-003",
+        "FEATURE-004"
+      ],
+      "trigger_actions": [
+        "create trip",
+        "change visibility",
+        "send invite",
+        "approve member"
+      ],
+      "system_responses": [
+        "save draft or publishable trip",
+        "update public/private boundary",
+        "issue invite state",
+        "grant member workspace access"
+      ],
+      "validation_rules": [
+        "trip name and basic dates/location context are required before publishing",
+        "public page requires explicit publish action",
+        "membership approval requires organizer permission"
+      ],
+      "permission_behavior": "Only organizer can manage visibility and approvals.",
+      "error_behavior": "Show inline validation and preserve draft state."
+    },
+    {
+      "behavior_group_id": "BEHAVIOR-GROUP-002",
+      "name": "Public Funding and Updates",
+      "feature_ids": [
+        "FEATURE-005",
+        "FEATURE-006",
+        "FEATURE-007",
+        "FEATURE-014",
+        "FEATURE-015"
+      ],
+      "trigger_actions": [
+        "publish public page",
+        "open contribution CTA",
+        "configure external provider target",
+        "publish update",
+        "promote photo highlight"
+      ],
+      "system_responses": [
+        "show public trip page",
+        "handoff to external provider",
+        "store provider reference",
+        "publish audience-scoped update",
+        "show public highlight after confirmation"
+      ],
+      "validation_rules": [
+        "external contribution target must be a valid provider URL/reference",
+        "public updates require explicit audience selection",
+        "public photo highlights require organizer confirmation"
+      ],
+      "permission_behavior": "Public viewers can read public content; organizer controls provider target and public promotion.",
+      "error_behavior": "If provider target is unavailable, show contribution unavailable state without blocking public page."
+    },
+    {
+      "behavior_group_id": "BEHAVIOR-GROUP-003",
+      "name": "Trip Ledger and Receipts",
+      "feature_ids": [
+        "FEATURE-008",
+        "FEATURE-009",
+        "FEATURE-010",
+        "FEATURE-011",
+        "FEATURE-012",
+        "FEATURE-013",
+        "FEATURE-021",
+        "FEATURE-023"
+      ],
+      "trigger_actions": [
+        "create expense",
+        "upload receipt",
+        "run OCR",
+        "show translation",
+        "show display FX",
+        "correct receipt"
+      ],
+      "system_responses": [
+        "create trip expense",
+        "store receipt metadata and file",
+        "show OCR pending/complete/failed",
+        "show translated/display values as derived data",
+        "preserve corrected source values",
+        "append audit event"
+      ],
+      "validation_rules": [
+        "expense amount, currency, paid-by, and scope are required",
+        "receipt corrections must retain original extraction history",
+        "display FX cannot overwrite source amount"
+      ],
+      "permission_behavior": "Approved trip members can create trip expenses and receipts; event receipts require event participant access.",
+      "error_behavior": "OCR/translation/FX failure falls back to manual entry and original values."
+    },
+    {
+      "behavior_group_id": "BEHAVIOR-GROUP-004",
+      "name": "Private Events",
+      "feature_ids": [
+        "FEATURE-017",
+        "FEATURE-018",
+        "FEATURE-019",
+        "FEATURE-020"
+      ],
+      "trigger_actions": [
+        "create private event",
+        "select participants",
+        "log event expense",
+        "update payment status"
+      ],
+      "system_responses": [
+        "create participant-scoped event",
+        "filter participant list to approved trip members",
+        "create event-only expense",
+        "update tracking-only payment status"
+      ],
+      "validation_rules": [
+        "participants must be approved trip members",
+        "event expenses must remain event scoped",
+        "payment status cannot trigger in-app settlement"
+      ],
+      "permission_behavior": "Only event participants and admins can view event details.",
+      "error_behavior": "Permission-denied state explains event access boundary without revealing private event data."
+    },
+    {
+      "behavior_group_id": "BEHAVIOR-GROUP-005",
+      "name": "Media, Notifications, Moderation, and Audit",
+      "feature_ids": [
+        "FEATURE-016",
+        "FEATURE-022",
+        "FEATURE-023",
+        "FEATURE-024"
+      ],
+      "trigger_actions": [
+        "upload photo",
+        "send notification",
+        "report content",
+        "record moderation action"
+      ],
+      "system_responses": [
+        "store member-only media",
+        "deliver or queue notification",
+        "create report",
+        "append moderation and audit events"
+      ],
+      "validation_rules": [
+        "media is member-only by default",
+        "public promotion requires explicit organizer action",
+        "reports require target content or context",
+        "audit events are append-only"
+      ],
+      "permission_behavior": "Admins can review reports and audit events; ordinary users cannot access admin records.",
+      "error_behavior": "Failed media upload or notification delivery shows retry/pending state."
+    }
+  ],
+  "global_behavior_rules": [
+    "Every sensitive write creates visible success/failure feedback and an audit event.",
+    "Any public exposure action requires explicit audience selection or confirmation.",
+    "Any async process exposes pending, success, failed, retry, and manual fallback states.",
+    "External contribution behavior must never imply Crewly has custody of funds."
+  ],
+  "risks_and_constraints": [
+    {
+      "risk_id": "UX-RISK-005",
+      "risk": "Public contribution setup could look like a native payout account flow.",
+      "severity": "high",
+      "mitigation": "Use external provider target language and omit Crewly payout/account balance controls."
+    },
+    {
+      "risk_id": "UX-RISK-006",
+      "risk": "Receipt localization could be mistaken for authoritative financial truth.",
+      "severity": "medium",
+      "mitigation": "Label original, extracted, translated, and display currency values distinctly."
+    }
+  ],
+  "unresolved_questions": [],
+  "stage_5_handoff_notes": [
+    "Each behavior group should become acceptance criteria for related implementation tickets.",
+    "Include audit, permission, and state behavior in ticket definitions."
+  ]
+}

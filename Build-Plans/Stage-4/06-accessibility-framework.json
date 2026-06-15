@@ -1,0 +1,86 @@
+{
+  "stage": "Stage 4",
+  "artifact_id": "ARTIFACT-STAGE4-06",
+  "name": "Accessibility Framework",
+  "status": "completed",
+  "related_stage_1_workflows": [
+    "WORKFLOW-001",
+    "WORKFLOW-003",
+    "WORKFLOW-005",
+    "WORKFLOW-008",
+    "WORKFLOW-009",
+    "WORKFLOW-010"
+  ],
+  "related_stage_3_constraints": [
+    "role and scope based authorization",
+    "async processing states",
+    "public/private visibility boundary",
+    "receipt source/display value distinction"
+  ],
+  "ux_decisions": [
+    {
+      "decision_id": "UX-DEC-009",
+      "decision": "Treat accessibility as a baseline requirement for Stage 5, not an optional polish pass.",
+      "rationale": "Core workflows include forms, status changes, financial context, uploads, and permission boundaries."
+    }
+  ],
+  "accessibility_framework": {
+    "keyboard_requirements": [
+      "All navigation, forms, tabs, modals, uploads, menus, and admin actions must be keyboard reachable.",
+      "Focus order must follow visible layout and scope hierarchy.",
+      "Modal confirmations for public promotion and provider handoff must trap focus and return focus to triggering control."
+    ],
+    "screen_reader_requirements": [
+      "Scope banners must be announced as contextual status.",
+      "Async receipt/provider status changes must use appropriate live regions.",
+      "Receipt original, extracted, translated, and display currency values must have explicit labels.",
+      "Permission-denied states must explain access boundary without exposing private data."
+    ],
+    "form_requirements": [
+      "All fields need programmatic labels.",
+      "Validation errors must be associated with fields.",
+      "Currency, amount, paid-by, participant, and visibility controls require clear required/optional state.",
+      "External provider URL/reference validation must describe the expected input."
+    ],
+    "visual_requirements": [
+      "Do not rely on color alone to distinguish public/private/event scopes.",
+      "Use readable contrast for financial and status data.",
+      "Use persistent labels for original versus derived receipt values.",
+      "Use clear icon plus text for high-risk public exposure actions."
+    ],
+    "motion_and_timing_requirements": [
+      "No critical information should depend on animation.",
+      "Async status updates must remain visible after transitions.",
+      "Timeouts must not discard unsaved user input."
+    ],
+    "error_messaging_requirements": [
+      "Errors must state what failed, whether data was saved, and the next recovery action.",
+      "Provider handoff errors must clarify that the external provider owns checkout/payment handling.",
+      "Receipt processing failures must offer retry or manual entry."
+    ]
+  },
+  "accessibility_risks": [
+    {
+      "risk_id": "A11Y-RISK-001",
+      "risk": "Scope and privacy state could be communicated visually only.",
+      "severity": "high",
+      "mitigation": "Expose scope text, ARIA labels, and consistent headings for public/private/event contexts."
+    },
+    {
+      "risk_id": "A11Y-RISK-002",
+      "risk": "Async receipt/provider updates may not be announced to assistive technology.",
+      "severity": "medium",
+      "mitigation": "Use live regions and persistent status summaries."
+    },
+    {
+      "risk_id": "A11Y-RISK-003",
+      "risk": "Financial and receipt tables may be difficult to navigate.",
+      "severity": "medium",
+      "mitigation": "Use semantic tables or structured list alternatives with clear headers and captions."
+    }
+  ],
+  "unresolved_questions": [],
+  "stage_5_handoff_notes": [
+    "Stage 5 tickets should include keyboard, screen reader, contrast, focus management, and error association acceptance criteria."
+  ]
+}

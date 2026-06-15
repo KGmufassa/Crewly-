@@ -1,0 +1,143 @@
+{
+  "stage": "Stage 3",
+  "artifact_id": "ARTIFACT-STAGE3-03",
+  "name": "Data Architecture",
+  "status": "completed",
+  "related_stage_1_files": [
+    "Build-Plans/Stage-1/03-workflow-architecture.json",
+    "Build-Plans/Stage-1/05-feature-structure.json",
+    "Build-Plans/Stage-1/09-risk-and-constraints.json"
+  ],
+  "related_stage_2_assumption_ids": [
+    "ASSUMPTION-002",
+    "ASSUMPTION-003",
+    "ASSUMPTION-009",
+    "ASSUMPTION-010",
+    "ASSUMPTION-011"
+  ],
+  "architecture_decisions": [
+    {
+      "decision_id": "ARCH-DEC-006",
+      "decision": "Use a relational primary data model with scoped ownership and append-only audit events.",
+      "rationale": "Crewly has strongly related users, trips, memberships, ledgers, events, receipts, and permissions."
+    },
+    {
+      "decision_id": "ARCH-DEC-007",
+      "decision": "Store original receipt values separately from OCR, translation, and display currency values.",
+      "rationale": "Stage 2 validated original receipt values as financial source of truth."
+    }
+  ],
+  "entities": [
+    {
+      "entity_id": "ENTITY-001",
+      "name": "User",
+      "owner_service_id": "SERVICE-001",
+      "sensitive": true
+    },
+    {
+      "entity_id": "ENTITY-002",
+      "name": "Trip",
+      "owner_service_id": "SERVICE-002",
+      "relationships": [
+        "Membership",
+        "ContributionCampaign",
+        "TripExpense",
+        "BulletinPost",
+        "MediaAsset"
+      ]
+    },
+    {
+      "entity_id": "ENTITY-003",
+      "name": "Membership",
+      "owner_service_id": "SERVICE-001",
+      "relationships": [
+        "User",
+        "Trip"
+      ]
+    },
+    {
+      "entity_id": "ENTITY-004",
+      "name": "ContributionCampaign",
+      "owner_service_id": "SERVICE-003",
+      "notes": "References external provider campaign or checkout target; does not represent Crewly-held funds."
+    },
+    {
+      "entity_id": "ENTITY-005",
+      "name": "ExternalContributionReference",
+      "owner_service_id": "SERVICE-003",
+      "notes": "Stores provider IDs, status, display amount, supporter display metadata when available, and reconciliation state."
+    },
+    {
+      "entity_id": "ENTITY-006",
+      "name": "TripExpense",
+      "owner_service_id": "SERVICE-004",
+      "source_of_truth": true
+    },
+    {
+      "entity_id": "ENTITY-007",
+      "name": "PrivateEvent",
+      "owner_service_id": "SERVICE-004"
+    },
+    {
+      "entity_id": "ENTITY-008",
+      "name": "EventExpense",
+      "owner_service_id": "SERVICE-004",
+      "scope": "private_event_only"
+    },
+    {
+      "entity_id": "ENTITY-009",
+      "name": "Receipt",
+      "owner_service_id": "SERVICE-005",
+      "relationships": [
+        "TripExpense",
+        "EventExpense"
+      ]
+    },
+    {
+      "entity_id": "ENTITY-010",
+      "name": "ReceiptExtraction",
+      "owner_service_id": "SERVICE-005",
+      "derived": true
+    },
+    {
+      "entity_id": "ENTITY-011",
+      "name": "ReceiptTranslation",
+      "owner_service_id": "SERVICE-005",
+      "derived": true
+    },
+    {
+      "entity_id": "ENTITY-012",
+      "name": "MediaAsset",
+      "owner_service_id": "SERVICE-006",
+      "default_visibility": "member_only"
+    },
+    {
+      "entity_id": "ENTITY-013",
+      "name": "AuditEvent",
+      "owner_service_id": "SERVICE-008",
+      "append_only": true
+    }
+  ],
+  "data_lifecycle": [
+    "Receipt and media binary content is stored in object storage; database stores metadata and access scope.",
+    "Receipt derived values can be regenerated; original uploaded image and corrected source fields are preserved.",
+    "Audit events are append-only and retained for support, moderation, and financial transparency.",
+    "External contribution provider references can be manually reconciled if automated import is unavailable."
+  ],
+  "risks_and_constraints": [
+    {
+      "risk_id": "ARCH-RISK-003",
+      "risk": "Contribution references may be mistaken for Crewly-managed funds.",
+      "severity": "high",
+      "mitigation": "Name entities and APIs as external references; avoid balance semantics that imply custody."
+    }
+  ],
+  "unresolved_questions": [],
+  "stage_4_handoff_notes": [
+    "UX should label original receipt values versus translated/display values.",
+    "UX should avoid presenting contribution references as Crewly-held account balances."
+  ],
+  "stage_5_handoff_notes": [
+    "Implement database constraints for ledger scope separation and append-only audit event creation."
+  ]
+}

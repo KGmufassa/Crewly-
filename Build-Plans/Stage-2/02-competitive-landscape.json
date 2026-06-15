@@ -1,0 +1,80 @@
+{
+  "stage": "Stage 2",
+  "artifact_id": "ARTIFACT-STAGE2-02",
+  "name": "Competitive Landscape",
+  "status": "completed",
+  "source_stage_1_files": [
+    "Build-Plans/Stage-1/01-product-foundation.json",
+    "Build-Plans/Stage-1/03-workflow-architecture.json",
+    "Build-Plans/Stage-1/08-mvp-operational-model.json"
+  ],
+  "assumption_ids": [
+    "ASSUMPTION-005",
+    "ASSUMPTION-006",
+    "ASSUMPTION-007",
+    "ASSUMPTION-008"
+  ],
+  "competitors": [
+    {
+      "competitor_id": "COMP-001",
+      "name": "Splitwise",
+      "category": "shared expense tracking",
+      "source_url": "https://www.splitwise.com/",
+      "validated_capabilities": [
+        "group expense tracking",
+        "balance tracking",
+        "settle-up recording",
+        "receipt scanning and currency conversion in Pro"
+      ],
+      "crewly_gap_or_opportunity": "Splitwise validates expense splitting but does not provide a trip-first public support surface or organizer-controlled campaign model.",
+      "affected_workflow_ids": [
+        "WORKFLOW-004",
+        "WORKFLOW-005",
+        "WORKFLOW-009",
+        "WORKFLOW-010"
+      ]
+    },
+    {
+      "competitor_id": "COMP-002",
+      "name": "GoFundMe",
+      "category": "public fundraising",
+      "source_url": "https://www.gofundme.com/",
+      "validated_capabilities": [
+        "fundraiser creation",
+        "fundraiser sharing",
+        "public donor contribution",
+        "fund receipt by organizer or beneficiary"
+      ],
+      "crewly_gap_or_opportunity": "GoFundMe validates fundraising behavior but does not solve private trip coordination, trip ledgers, receipt localization, or private event scope separation.",
+      "affected_workflow_ids": [
+        "WORKFLOW-003",
+        "WORKFLOW-006"
+      ]
+    },
+    {
+      "competitor_id": "COMP-003",
+      "name": "Wanderlog",
+      "category": "travel planning",
+      "source_url": "https://wanderlog.com/",
+      "validated_capabilities": [
+        "itinerary planning",
+        "booking organization",
+        "map-based planning",
+        "budgeting and group trip signals"
+      ],
+      "crewly_gap_or_opportunity": "Wanderlog validates trip planning and budgeting demand but does not center pooled support, receipt-backed ledgers, or private event financial separation."
+    }
+  ],
+  "positioning_summary": {
+    "validated_differentiator": "Crewly is differentiated only if the architecture keeps funding, trip ledger transparency, private event ledgers, and media/update privacy in one coherent trip hub.",
+    "saturation_risk": "high",
+    "saturation_reason": "Each component exists in adjacent tools, so generic trip planning or generic expense splitting would be weak positioning.",
+    "confidence": 0.7,
+    "evidence_quality": "medium"
+  },
+  "recommendations": [
+    "Avoid competing as a generic itinerary planner or generic expense splitter.",
+    "Make ledger scope, public contribution trust, and receipt-backed transparency first-class product claims.",
+    "Do not add in-app private event settlement in MVP; it would move Crewly closer to crowded P2P settlement complexity without proving the core wedge."
+  ]
+}

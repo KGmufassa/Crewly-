@@ -1,0 +1,248 @@
+{
+  "stage": "Stage 4",
+  "artifact_id": "ARTIFACT-STAGE4-01",
+  "name": "User Journeys",
+  "status": "completed",
+  "related_stage_1_workflows": [
+    "WORKFLOW-001",
+    "WORKFLOW-002",
+    "WORKFLOW-003",
+    "WORKFLOW-004",
+    "WORKFLOW-005",
+    "WORKFLOW-006",
+    "WORKFLOW-007",
+    "WORKFLOW-008",
+    "WORKFLOW-009",
+    "WORKFLOW-010"
+  ],
+  "related_stage_3_constraints": [
+    "ExternalContributionProvider boundary",
+    "role and scope based authorization",
+    "ledger scope separation",
+    "receipt source/display data separation",
+    "async receipt and provider processing states"
+  ],
+  "ux_decisions": [
+    {
+      "decision_id": "UX-DEC-001",
+      "decision": "Center the MVP around a trip workspace with public page, private member workspace, and private event subspaces.",
+      "rationale": "Stage 3 defines distinct public, private trip, and private event trust boundaries."
+    },
+    {
+      "decision_id": "UX-DEC-002",
+      "decision": "Treat external contribution checkout as a clear off-platform handoff.",
+      "rationale": "Crewly must not imply it processes, holds, refunds, disputes, or pays out contribution funds in MVP."
+    }
+  ],
+  "journeys": [
+    {
+      "journey_id": "JOURNEY-001",
+      "name": "Organizer creates and publishes a trip",
+      "primary_user_id": "USER-001",
+      "workflow_ids": [
+        "WORKFLOW-001",
+        "WORKFLOW-002",
+        "WORKFLOW-003"
+      ],
+      "entry_points": [
+        "new trip command",
+        "organizer dashboard"
+      ],
+      "start_state": "Organizer has no structured trip hub.",
+      "steps": [
+        "create trip basics",
+        "configure visibility",
+        "invite or approve members",
+        "connect or paste external contribution provider target",
+        "publish public trip page"
+      ],
+      "success_state": "Trip has a private workspace and a public page with an external-provider contribution CTA.",
+      "failure_states": [
+        "missing required trip details",
+        "invalid contribution provider link",
+        "publish blocked by visibility requirements"
+      ],
+      "recovery_paths": [
+        "save as draft",
+        "correct validation errors",
+        "publish without contribution CTA until provider target is configured"
+      ]
+    },
+    {
+      "journey_id": "JOURNEY-002",
+      "name": "Public supporter reviews and contributes",
+      "primary_user_id": "USER-003",
+      "workflow_ids": [
+        "WORKFLOW-003",
+        "WORKFLOW-006"
+      ],
+      "entry_points": [
+        "shared public trip URL"
+      ],
+      "start_state": "Supporter opens a public trip page.",
+      "steps": [
+        "review public trip summary",
+        "review visible updates and contribution context",
+        "choose contribution CTA",
+        "continue to external provider checkout",
+        "return to public trip page if available"
+      ],
+      "success_state": "Supporter understands they are contributing through an external provider and can return to Crewly for public updates.",
+      "failure_states": [
+        "external provider unavailable",
+        "contribution target not configured",
+        "supporter cancels external checkout"
+      ],
+      "recovery_paths": [
+        "show provider unavailable state",
+        "allow supporter to continue reading public updates",
+        "offer retry when provider link is available"
+      ]
+    },
+    {
+      "journey_id": "JOURNEY-003",
+      "name": "Member logs expense and localizes receipt",
+      "primary_user_id": "USER-002",
+      "workflow_ids": [
+        "WORKFLOW-004",
+        "WORKFLOW-005"
+      ],
+      "entry_points": [
+        "trip ledger",
+        "receipt upload action"
+      ],
+      "start_state": "Trip spending occurred and needs to be recorded.",
+      "steps": [
+        "create trip expense",
+        "upload receipt",
+        "wait for OCR processing",
+        "review extracted fields",
+        "view translation and display currency values",
+        "manually correct source fields if needed"
+      ],
+      "success_state": "Expense and receipt are visible to authorized trip members with original values preserved.",
+      "failure_states": [
+        "upload fails",
+        "OCR fails",
+        "translation unavailable",
+        "FX display unavailable"
+      ],
+      "recovery_paths": [
+        "manual receipt entry",
+        "retry upload",
+        "show original receipt without derived display values",
+        "save corrected source fields"
+      ]
+    },
+    {
+      "journey_id": "JOURNEY-004",
+      "name": "Member creates private event and tracks event expenses",
+      "primary_user_id": "USER-002",
+      "workflow_ids": [
+        "WORKFLOW-008",
+        "WORKFLOW-009",
+        "WORKFLOW-010"
+      ],
+      "entry_points": [
+        "private trip workspace",
+        "private events list"
+      ],
+      "start_state": "Subset of approved trip members needs private side activity tracking.",
+      "steps": [
+        "create private event",
+        "select approved trip members",
+        "log event expense",
+        "record who owes whom",
+        "update payment status"
+      ],
+      "success_state": "Event participants see event-specific balances separate from the trip ledger.",
+      "failure_states": [
+        "selected participant is not approved trip member",
+        "viewer lacks event access",
+        "payment status update rejected"
+      ],
+      "recovery_paths": [
+        "revise participant list",
+        "request access explanation",
+        "retry status update"
+      ]
+    },
+    {
+      "journey_id": "JOURNEY-005",
+      "name": "Organizer publishes updates and public highlights",
+      "primary_user_id": "USER-001",
+      "workflow_ids": [
+        "WORKFLOW-006",
+        "WORKFLOW-007"
+      ],
+      "entry_points": [
+        "bulletin composer",
+        "member album"
+      ],
+      "start_state": "Trip has updates or media that may be shared with selected audiences.",
+      "steps": [
+        "compose update or select media",
+        "choose member-only or public visibility",
+        "confirm public promotion when applicable",
+        "publish"
+      ],
+      "success_state": "Content appears only to the selected audience.",
+      "failure_states": [
+        "public promotion lacks confirmation",
+        "media upload fails",
+        "content report or moderation hold"
+      ],
+      "recovery_paths": [
+        "save draft",
+        "retry upload",
+        "keep content member-only",
+        "view moderation reason"
+      ]
+    },
+    {
+      "journey_id": "JOURNEY-006",
+      "name": "Admin reviews reports and audit events",
+      "primary_user_id": "USER-004",
+      "workflow_ids": [
+        "WORKFLOW-003",
+        "WORKFLOW-006",
+        "WORKFLOW-007",
+        "WORKFLOW-009"
+      ],
+      "entry_points": [
+        "admin operations console",
+        "report notification"
+      ],
+      "start_state": "A report, support request, or audit review need exists.",
+      "steps": [
+        "open report queue",
+        "inspect public content or scoped audit event",
+        "apply moderation action",
+        "record support note"
+      ],
+      "success_state": "Report is resolved and audit trail is preserved.",
+      "failure_states": [
+        "insufficient admin permission",
+        "referenced content unavailable",
+        "provider reference cannot be verified"
+      ],
+      "recovery_paths": [
+        "escalate internally",
+        "record unresolved support status",
+        "request organizer/provider evidence"
+      ]
+    }
+  ],
+  "risks_and_constraints": [
+    {
+      "risk_id": "UX-RISK-001",
+      "risk": "Users may confuse external contribution status with Crewly-held funds.",
+      "severity": "high",
+      "mitigation": "Use off-platform handoff language and avoid balance/custody labels for provider references."
+    }
+  ],
+  "unresolved_questions": [],
+  "stage_5_handoff_notes": [
+    "Implementation slices should map each journey to screens, APIs, permissions, and state tests."
+  ]
+}

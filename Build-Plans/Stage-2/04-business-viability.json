@@ -1,0 +1,85 @@
+{
+  "stage": "Stage 2",
+  "artifact_id": "ARTIFACT-STAGE2-04",
+  "name": "Business Viability",
+  "status": "completed",
+  "source_stage_1_files": [
+    "Build-Plans/Stage-1/01-product-foundation.json",
+    "Build-Plans/Stage-1/08-mvp-operational-model.json",
+    "Build-Plans/Stage-1/10-success-framework.json"
+  ],
+  "assumption_ids": [
+    "ASSUMPTION-001",
+    "ASSUMPTION-002",
+    "ASSUMPTION-005",
+    "ASSUMPTION-006",
+    "ASSUMPTION-013",
+    "ASSUMPTION-014"
+  ],
+  "validated_findings": [
+    {
+      "finding_id": "FINDING-BUS-001",
+      "finding": "There is a plausible business wedge around organizers who need trust-building and coordination around group trips, but willingness to pay has not been established.",
+      "evidence_type": "inference",
+      "evidence": [
+        {
+          "source": "Stage 1 success framework",
+          "url": "Build-Plans/Stage-1/10-success-framework.json",
+          "summary": "Stage 1 identifies organizer activation, contribution conversion, expense transparency, receipt usability, and member participation as success criteria."
+        }
+      ],
+      "confidence": 0.62,
+      "evidence_quality": "low",
+      "traceability_refs": [
+        "SUCCESS-001",
+        "SUCCESS-002",
+        "SUCCESS-003",
+        "SUCCESS-004",
+        "SUCCESS-005"
+      ]
+    },
+    {
+      "finding_id": "FINDING-BUS-002",
+      "finding": "Payment-related revenue should not be part of MVP assumptions because public contribution checkout and payout are delegated to an external provider.",
+      "evidence_type": "external_evidence_plus_inference",
+      "evidence": [
+        {
+          "source": "Stripe Connect charges",
+          "url": "https://docs.stripe.com/connect/charges",
+          "summary": "Stripe charge type affects whether platform or connected accounts are debited for fees, refunds, disputes, and chargebacks, supporting the decision to avoid Crewly-owned funds flow in MVP."
+        },
+        {
+          "source": "GoFundMe homepage",
+          "url": "https://www.gofundme.com/",
+          "summary": "GoFundMe emphasizes no fee to start fundraising, simple pricing, and trust and safety, indicating contributor fee perception is part of the product trust model."
+        }
+      ],
+      "confidence": 0.68,
+      "evidence_quality": "medium",
+      "traceability_refs": [
+        "WORKFLOW-003",
+        "RISK-002",
+        "RISK-003"
+      ]
+    }
+  ],
+  "business_constraints": [
+    "Do not assume transaction margin from public contributions in MVP.",
+    "External provider terms, fees, and data availability must be validated before implementation planning.",
+    "Do not rely on broad social virality before proving organizer activation and contribution conversion.",
+    "Keep early monetization optional or subscription-oriented unless payment economics are validated."
+  ],
+  "scalability_constraints": [
+    "Receipt OCR, translation, media storage, and exchange-rate lookups introduce variable usage cost.",
+    "Moderation and payment support load can scale faster than revenue if public pages and organizer payouts are loosely controlled."
+  ],
+  "confidence": {
+    "business": 0.66,
+    "scalability": 0.68
+  },
+  "recommendations": [
+    "Run willingness-to-pay and contribution fee sensitivity tests before deciding monetization.",
+    "Model cost per active trip, cost per receipt, and payment support cost before Stage 5 ticketing.",
+    "Keep MVP scope constrained to reduce operational cost exposure."
+  ]
+}

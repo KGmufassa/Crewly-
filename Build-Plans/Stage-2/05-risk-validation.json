@@ -1,0 +1,119 @@
+{
+  "stage": "Stage 2",
+  "artifact_id": "ARTIFACT-STAGE2-05",
+  "name": "Risk Validation",
+  "status": "completed",
+  "source_stage_1_files": [
+    "Build-Plans/Stage-1/09-risk-and-constraints.json"
+  ],
+  "risk_registry": [
+    {
+      "id": "RISK-001",
+      "risk": "OCR extraction quality may be inconsistent across international receipts.",
+      "domain": "technical",
+      "severity": "high",
+      "likelihood": "medium",
+      "affected_assumptions": [
+        "ASSUMPTION-003",
+        "ASSUMPTION-011"
+      ],
+      "validation_status": "mitigated",
+      "confidence": 0.7,
+      "mitigation": "Keep manual correction mandatory in the receipt flow and preserve original source values.",
+      "owner_stage": "Stage 2"
+    },
+    {
+      "id": "RISK-002",
+      "risk": "Users may not trust organizer-controlled pooled funds without strong transparency cues.",
+      "domain": "business",
+      "severity": "high",
+      "likelihood": "medium",
+      "affected_assumptions": [
+        "ASSUMPTION-001",
+        "ASSUMPTION-002",
+        "ASSUMPTION-006"
+      ],
+      "validation_status": "weakened",
+      "confidence": 0.58,
+      "mitigation": "Validate public contribution page copy, ledger transparency, and payout explanation with organizers and supporters.",
+      "owner_stage": "Stage 2"
+    },
+    {
+      "id": "RISK-003",
+      "risk": "Trip contributions and organizer payouts may trigger processor, refund, KYC, compliance, or restricted business requirements if Crewly owns money movement.",
+      "domain": "compliance",
+      "severity": "medium",
+      "likelihood": "low",
+      "affected_assumptions": [
+        "ASSUMPTION-002",
+        "ASSUMPTION-009"
+      ],
+      "validation_status": "mitigated",
+      "confidence": 0.76,
+      "mitigation": "MVP uses an external crowdfunding/payment provider for checkout, KYC, refunds, disputes, and organizer payout. Crewly stores contribution references/status only and does not process, hold, refund, dispute, or pay out funds directly.",
+      "owner_stage": "Stage 2"
+    },
+    {
+      "id": "RISK-004",
+      "risk": "Users may confuse trip-wide pooled funds with private event payment tracking.",
+      "domain": "operational",
+      "severity": "high",
+      "likelihood": "high",
+      "affected_assumptions": [
+        "ASSUMPTION-004",
+        "ASSUMPTION-010"
+      ],
+      "validation_status": "mitigated",
+      "confidence": 0.69,
+      "mitigation": "Stage 3 and Stage 4 must keep trip and event ledgers separate in data model, navigation, labels, summaries, and permissions.",
+      "owner_stage": "Stage 2"
+    },
+    {
+      "id": "RISK-005",
+      "risk": "Public trip pages, photos, and updates may leak private information or require moderation intervention.",
+      "domain": "operational",
+      "severity": "high",
+      "likelihood": "medium",
+      "affected_assumptions": [
+        "ASSUMPTION-007",
+        "ASSUMPTION-012"
+      ],
+      "validation_status": "mitigated",
+      "confidence": 0.68,
+      "mitigation": "Default media and detailed updates to private; require organizer promotion for public highlights; include reporting and audit trails.",
+      "owner_stage": "Stage 2"
+    },
+    {
+      "id": "RISK-006",
+      "risk": "Translated receipt text or display-only currency conversion may be mistaken for authoritative financial truth.",
+      "domain": "operational",
+      "severity": "medium",
+      "likelihood": "medium",
+      "affected_assumptions": [
+        "ASSUMPTION-003",
+        "ASSUMPTION-011"
+      ],
+      "validation_status": "mitigated",
+      "confidence": 0.72,
+      "mitigation": "Display original values beside translated and converted values; label converted values as display-only.",
+      "owner_stage": "Stage 2"
+    }
+  ],
+  "contradictions": [],
+  "critical_unknowns": [],
+  "resolved_unknowns": [
+    {
+      "id": "UNKNOWN-001",
+      "description": "Payment processor, compliance, refund, and KYC fit for organizer-controlled pooled trip support is resolved for MVP by external-provider delegation.",
+      "affected_risk_ids": [
+        "RISK-003"
+      ],
+      "affected_assumption_ids": [
+        "ASSUMPTION-002",
+        "ASSUMPTION-009"
+      ],
+      "severity": "medium",
+      "next_action": "Stage 3 should define provider-agnostic integration boundaries; Stage 5 should select the specific external provider before implementation."
+    }
+  ]
+}

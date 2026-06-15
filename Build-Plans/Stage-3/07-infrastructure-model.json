@@ -1,0 +1,72 @@
+{
+  "stage": "Stage 3",
+  "artifact_id": "ARTIFACT-STAGE3-07",
+  "name": "Infrastructure Model",
+  "status": "completed",
+  "related_stage_1_files": [
+    "Build-Plans/Stage-1/07-dependency-map.json",
+    "Build-Plans/Stage-1/08-mvp-operational-model.json"
+  ],
+  "related_stage_2_assumption_ids": [
+    "ASSUMPTION-011",
+    "ASSUMPTION-012",
+    "ASSUMPTION-014"
+  ],
+  "architecture_decisions": [
+    {
+      "decision_id": "ARCH-DEC-013",
+      "decision": "Use a standard web app, relational database, object storage, queue, and worker deployment model.",
+      "rationale": "MVP requires reliable CRUD, file handling, external processing, and async workflows without specialized infrastructure."
+    }
+  ],
+  "infrastructure_model": {
+    "runtime": [
+      "web application runtime",
+      "API/backend runtime",
+      "background worker runtime",
+      "admin operations runtime"
+    ],
+    "storage": [
+      "relational database for application data",
+      "object storage for receipts and media",
+      "queue for async work",
+      "audit event persistence"
+    ],
+    "environments": [
+      "local",
+      "staging",
+      "production"
+    ],
+    "background_jobs": [
+      "receipt OCR",
+      "receipt translation",
+      "FX display refresh",
+      "notification delivery",
+      "provider reference synchronization",
+      "media processing if needed"
+    ],
+    "observability": [
+      "request logs",
+      "job failure logs",
+      "provider sync logs",
+      "audit event dashboards",
+      "error tracking",
+      "basic metrics for uploads, OCR jobs, translation jobs, contribution sync, and notification delivery"
+    ]
+  },
+  "risks_and_constraints": [
+    {
+      "risk_id": "ARCH-RISK-008",
+      "risk": "Async job failures may leave receipts or contribution references in confusing states.",
+      "severity": "medium",
+      "mitigation": "Represent pending, failed, corrected, and manually reconciled states explicitly."
+    }
+  ],
+  "unresolved_questions": [],
+  "stage_4_handoff_notes": [
+    "UX should include pending/error states for receipt processing and provider sync."
+  ],
+  "stage_5_handoff_notes": [
+    "Development orchestration should schedule infrastructure setup before receipt/provider worker tickets."
+  ]
+}

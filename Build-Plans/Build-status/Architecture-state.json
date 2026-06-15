@@ -1,32 +1,463 @@
 {
   "stage": "Stage 3",
   "command": "stage-3-system-architecture",
-  "status": "not_started",
-  "stage_1_inputs": {},
-  "stage_2_inputs": {},
-  "preflight": {},
-  "architecture_drivers": [],
-  "architecture_decisions": [],
-  "system_topology": {},
-  "service_architecture": {},
-  "data_architecture": {},
-  "api_architecture": {},
-  "integration_architecture": {},
-  "security_foundations": {},
-  "infrastructure_model": {},
-  "scalability_framework": {},
-  "architecture_risks": [],
-  "tradeoffs": [],
-  "open_questions": [],
+  "status": "completed",
+  "stage_1_inputs": {
+    "source_output_directory": "Build-Plans/Stage-1/",
+    "required_files_loaded": [
+      "01-product-foundation.json",
+      "02-user-system-map.json",
+      "03-workflow-architecture.json",
+      "04-product-capabilities.json",
+      "05-feature-structure.json",
+      "06-product-boundaries.json",
+      "07-dependency-map.json",
+      "08-mvp-operational-model.json",
+      "09-risk-and-constraints.json",
+      "10-success-framework.json"
+    ]
+  },
+  "stage_2_inputs": {
+    "source_output_directory": "Build-Plans/Stage-2/",
+    "required_files_loaded": [
+      "01-market-analysis.json",
+      "02-competitive-landscape.json",
+      "03-technical-feasibility.json",
+      "04-business-viability.json",
+      "05-risk-validation.json",
+      "06-strategic-positioning.json"
+    ],
+    "validation_state": "Build-Plans/Build-status/Validation-state.json",
+    "architecture_readiness": "ready",
+    "readiness_score": 0.78
+  },
+  "preflight": {
+    "stage_1_outputs_exist": true,
+    "stage_2_outputs_exist": true,
+    "architecture_readiness_acceptable": true,
+    "stage_2_critical_unknowns_resolved_or_mitigated": true,
+    "validated_assumptions_available": true,
+    "high_and_critical_risks_have_mitigation_paths": true,
+    "mvp_scope_clear_enough": true,
+    "result": "passed"
+  },
+  "architecture_drivers": [
+    {
+      "driver_id": "ARCH-DRIVER-001",
+      "driver": "Public contribution checkout and payout must use an external provider boundary.",
+      "source_refs": [
+        "ASSUMPTION-002",
+        "ASSUMPTION-009",
+        "RISK-003"
+      ]
+    },
+    {
+      "driver_id": "ARCH-DRIVER-002",
+      "driver": "Trip ledger, private event ledger, and contribution references must remain separate.",
+      "source_refs": [
+        "ASSUMPTION-010",
+        "RISK-004"
+      ]
+    },
+    {
+      "driver_id": "ARCH-DRIVER-003",
+      "driver": "Receipt source values must be preserved separately from OCR, translation, and display FX.",
+      "source_refs": [
+        "ASSUMPTION-003",
+        "ASSUMPTION-011",
+        "RISK-001",
+        "RISK-006"
+      ]
+    },
+    {
+      "driver_id": "ARCH-DRIVER-004",
+      "driver": "Public/private visibility and moderation boundaries are first-class architecture concerns.",
+      "source_refs": [
+        "ASSUMPTION-007",
+        "ASSUMPTION-012",
+        "RISK-005"
+      ]
+    }
+  ],
+  "architecture_decisions": [
+    {
+      "decision_id": "ARCH-DEC-001",
+      "decision": "Use one member-facing web app plus an admin operations surface backed by modular backend domains."
+    },
+    {
+      "decision_id": "ARCH-DEC-002",
+      "decision": "Model public contributions through an ExternalContributionProvider boundary instead of Crewly-owned payment processing."
+    },
+    {
+      "decision_id": "ARCH-DEC-003",
+      "decision": "Run OCR, translation, FX lookup, notifications, and provider reconciliation asynchronously."
+    },
+    {
+      "decision_id": "ARCH-DEC-004",
+      "decision": "Use modular monolith service boundaries for MVP with explicit domain ownership."
+    },
+    {
+      "decision_id": "ARCH-DEC-005",
+      "decision": "Keep Contribution Reference separate from Ledger."
+    },
+    {
+      "decision_id": "ARCH-DEC-006",
+      "decision": "Use a relational primary data model with scoped ownership and append-only audit events."
+    },
+    {
+      "decision_id": "ARCH-DEC-007",
+      "decision": "Store original receipt values separately from OCR, translation, and display currency values."
+    },
+    {
+      "decision_id": "ARCH-DEC-008",
+      "decision": "Expose role-scoped application APIs and keep provider/admin APIs internal."
+    },
+    {
+      "decision_id": "ARCH-DEC-009",
+      "decision": "Use provider adapters for all external services."
+    },
+    {
+      "decision_id": "ARCH-DEC-010",
+      "decision": "Provider failures degrade to pending/manual states rather than blocking core trip access."
+    },
+    {
+      "decision_id": "ARCH-DEC-011",
+      "decision": "Use role and scope based authorization across all private resources."
+    },
+    {
+      "decision_id": "ARCH-DEC-012",
+      "decision": "Audit all sensitive state changes."
+    },
+    {
+      "decision_id": "ARCH-DEC-013",
+      "decision": "Use a standard web app, relational database, object storage, queue, and worker deployment model."
+    },
+    {
+      "decision_id": "ARCH-DEC-014",
+      "decision": "Scale expensive and failure-prone workflows independently through queues and workers."
+    },
+    {
+      "decision_id": "ARCH-DEC-015",
+      "decision": "Optimize first for correctness, scope separation, and auditability before high-scale collaboration."
+    }
+  ],
+  "system_topology": {
+    "artifact": "Build-Plans/Stage-3/01-system-topology.json",
+    "frontend_systems": [
+      "Crewly Web App",
+      "Admin Operations Console"
+    ],
+    "backend_domains": [
+      "Identity and Access",
+      "Trip Coordination",
+      "Contribution Reference",
+      "Ledger",
+      "Receipt Processing",
+      "Media and Bulletin",
+      "Notification",
+      "Moderation and Audit"
+    ],
+    "external_systems": [
+      "ExternalContributionProvider",
+      "OCR provider",
+      "translation provider",
+      "exchange-rate provider",
+      "notification provider",
+      "object storage provider"
+    ]
+  },
+  "service_architecture": {
+    "artifact": "Build-Plans/Stage-3/02-service-architecture.json",
+    "service_ids": [
+      "SERVICE-001",
+      "SERVICE-002",
+      "SERVICE-003",
+      "SERVICE-004",
+      "SERVICE-005",
+      "SERVICE-006",
+      "SERVICE-007",
+      "SERVICE-008"
+    ],
+    "style": "modular_monolith_with_explicit_domain_boundaries"
+  },
+  "data_architecture": {
+    "artifact": "Build-Plans/Stage-3/03-data-architecture.json",
+    "primary_store": "relational_application_database",
+    "object_storage": "receipts_and_media",
+    "audit_model": "append_only_audit_events",
+    "core_entity_ids": [
+      "ENTITY-001",
+      "ENTITY-002",
+      "ENTITY-003",
+      "ENTITY-004",
+      "ENTITY-005",
+      "ENTITY-006",
+      "ENTITY-007",
+      "ENTITY-008",
+      "ENTITY-009",
+      "ENTITY-010",
+      "ENTITY-011",
+      "ENTITY-012",
+      "ENTITY-013"
+    ]
+  },
+  "api_architecture": {
+    "artifact": "Build-Plans/Stage-3/04-api-architecture.json",
+    "api_ids": [
+      "API-001",
+      "API-002",
+      "API-003",
+      "API-004",
+      "API-005",
+      "API-006",
+      "API-007"
+    ],
+    "api_style": "role_scoped_application_apis"
+  },
+  "integration_architecture": {
+    "artifact": "Build-Plans/Stage-3/05-integration-architecture.json",
+    "integration_ids": [
+      "INTEGRATION-001",
+      "INTEGRATION-002",
+      "INTEGRATION-003",
+      "INTEGRATION-004",
+      "INTEGRATION-005",
+      "INTEGRATION-006"
+    ],
+    "provider_selection_deferred_to": "Stage 5"
+  },
+  "security_foundations": {
+    "artifact": "Build-Plans/Stage-3/06-security-foundations.json",
+    "authorization_model": "role_and_scope_based",
+    "roles": [
+      "public_viewer",
+      "public_supporter",
+      "trip_organizer",
+      "trip_member",
+      "private_event_participant",
+      "platform_admin"
+    ],
+    "audit_required": true
+  },
+  "infrastructure_model": {
+    "artifact": "Build-Plans/Stage-3/07-infrastructure-model.json",
+    "runtime": [
+      "web",
+      "api",
+      "worker",
+      "admin"
+    ],
+    "storage": [
+      "relational database",
+      "object storage",
+      "queue",
+      "audit event persistence"
+    ]
+  },
+  "scalability_framework": {
+    "artifact": "Build-Plans/Stage-3/08-scalability-framework.json",
+    "strategy": "queue_and_worker_scaling_for_external_and_expensive_workflows",
+    "cost_controls": [
+      "usage limits",
+      "manual fallback",
+      "on-demand processing",
+      "media lifecycle limits"
+    ]
+  },
+  "architecture_risks": [
+    {
+      "risk_id": "ARCH-RISK-001",
+      "risk": "External provider selection may limit contribution status import or reconciliation.",
+      "severity": "medium",
+      "mitigation": "Design provider-agnostic references with manual reconciliation fallback."
+    },
+    {
+      "risk_id": "ARCH-RISK-004",
+      "risk": "Improper API authorization could expose private trip or event data.",
+      "severity": "high",
+      "mitigation": "Centralize access checks and require scope checks for every private resource."
+    },
+    {
+      "risk_id": "ARCH-RISK-006",
+      "risk": "Visibility bugs could leak private trip, event, receipt, or media data.",
+      "severity": "high",
+      "mitigation": "Centralize visibility policy and test public/private/event participant transitions."
+    },
+    {
+      "risk_id": "ARCH-RISK-009",
+      "risk": "AI/document-processing costs may grow faster than monetization.",
+      "severity": "medium",
+      "mitigation": "Add usage limits, on-demand processing, and cost telemetry before launch."
+    }
+  ],
+  "tradeoffs": [
+    {
+      "tradeoff_id": "TRADEOFF-001",
+      "choice": "modular monolith over microservices",
+      "benefit": "faster MVP development and simpler transactions",
+      "cost": "requires discipline to preserve service boundaries"
+    },
+    {
+      "tradeoff_id": "TRADEOFF-002",
+      "choice": "external contribution provider over direct payments",
+      "benefit": "mitigates payment compliance risk for MVP",
+      "cost": "provider UX, export, and sync limitations"
+    },
+    {
+      "tradeoff_id": "TRADEOFF-003",
+      "choice": "async processing for receipts and integrations",
+      "benefit": "resilience and cost control",
+      "cost": "requires pending/error UX states"
+    }
+  ],
+  "open_questions": [
+    {
+      "question_id": "ARCH-Q-001",
+      "question": "Which external contribution provider will be selected for implementation?",
+      "classification": "stage_5_decision",
+      "blocks_stage_3": false
+    }
+  ],
   "interactive_guidance": {
     "open_questions": [],
-    "answered_questions": [],
-    "assumptions_made": [],
+    "answered_questions": [
+      "Stage 2 selected external-provider contribution handling for MVP."
+    ],
+    "assumptions_made": [
+      "MVP uses a modular monolith with explicit service/domain boundaries.",
+      "Receipt OCR, translation, FX display, notifications, and external provider sync run asynchronously.",
+      "Concrete provider choices are deferred to Stage 5 unless they change architecture boundaries.",
+      "Admin operations can be a separate protected surface within the same application platform."
+    ],
     "blocked_decisions": [],
-    "user_confirmations": [],
-    "architecture_confidence_gaps": []
+    "user_confirmations": [
+      "Use Option 3 for contribution handling: external provider owns checkout, KYC, refunds, disputes, and payout."
+    ],
+    "architecture_confidence_gaps": [
+      "Specific external contribution provider capabilities.",
+      "Expected receipt/media processing volume.",
+      "Detailed cost model for OCR, translation, storage, and provider sync."
+    ]
   },
-  "stage_4_handoff": {},
-  "stage_5_handoff": {},
-  "completion_status": {}
+  "stage_4_handoff": {
+    "source_stage": "Stage 3",
+    "target_stage": "Stage 4",
+    "source_output_directory": "Build-Plans/Stage-3/",
+    "required_files": [
+      "Build-Plans/Stage-3/01-system-topology.json",
+      "Build-Plans/Stage-3/02-service-architecture.json",
+      "Build-Plans/Stage-3/03-data-architecture.json",
+      "Build-Plans/Stage-3/04-api-architecture.json",
+      "Build-Plans/Stage-3/05-integration-architecture.json",
+      "Build-Plans/Stage-3/06-security-foundations.json",
+      "Build-Plans/Stage-3/07-infrastructure-model.json",
+      "Build-Plans/Stage-3/08-scalability-framework.json"
+    ],
+    "ready": true,
+    "blocking_items": [],
+    "accepted_risks": [
+      "ARCH-RISK-001",
+      "ARCH-RISK-004",
+      "ARCH-RISK-006",
+      "ARCH-RISK-009"
+    ],
+    "traceability_refs": [
+      "WORKFLOW-001",
+      "WORKFLOW-003",
+      "WORKFLOW-005",
+      "WORKFLOW-008",
+      "WORKFLOW-009",
+      "WORKFLOW-010",
+      "ASSUMPTION-002",
+      "ASSUMPTION-009",
+      "ASSUMPTION-010",
+      "ASSUMPTION-011"
+    ],
+    "ux_architecture_inputs": [
+      "public trip page must show external-provider contribution CTA",
+      "private trip workspace requires member access state",
+      "private event workspace requires participant-scoped access",
+      "ledger summaries must separate contribution references, trip expenses, and private event expenses",
+      "receipt views must distinguish original values from OCR/translation/display FX",
+      "async processing states are required for receipts, contribution sync, and notifications"
+    ],
+    "completion_status": {
+      "stage_specific_status": "ready_for_stage_4",
+      "global_status": "ready_for_next_stage",
+      "reason": "Stage 3 architecture outputs are complete enough for UX and interaction architecture.",
+      "blocking_items": [],
+      "next_actions": [
+        "Begin Stage 4 UX and interaction architecture."
+      ],
+      "ready_for": "Stage 4"
+    }
+  },
+  "stage_5_handoff": {
+    "source_stage": "Stage 3",
+    "target_stage": "Stage 5",
+    "source_output_directory": "Build-Plans/Stage-3/",
+    "required_files": [
+      "Build-Plans/Stage-3/01-system-topology.json",
+      "Build-Plans/Stage-3/02-service-architecture.json",
+      "Build-Plans/Stage-3/03-data-architecture.json",
+      "Build-Plans/Stage-3/04-api-architecture.json",
+      "Build-Plans/Stage-3/05-integration-architecture.json",
+      "Build-Plans/Stage-3/06-security-foundations.json",
+      "Build-Plans/Stage-3/07-infrastructure-model.json",
+      "Build-Plans/Stage-3/08-scalability-framework.json"
+    ],
+    "ready": true,
+    "blocking_items": [],
+    "accepted_risks": [
+      "ARCH-RISK-001",
+      "ARCH-RISK-004",
+      "ARCH-RISK-006",
+      "ARCH-RISK-009"
+    ],
+    "traceability_refs": [
+      "SERVICE-001",
+      "SERVICE-002",
+      "SERVICE-003",
+      "SERVICE-004",
+      "SERVICE-005",
+      "SERVICE-006",
+      "SERVICE-007",
+      "SERVICE-008",
+      "API-001",
+      "API-002",
+      "API-003",
+      "API-004",
+      "API-005",
+      "API-006",
+      "API-007"
+    ],
+    "development_orchestration_inputs": [
+      "service IDs should drive implementation slices",
+      "database schema must enforce ledger scope separation",
+      "provider selection is required before external contribution automation",
+      "authorization and audit tests are mandatory for sensitive workflows",
+      "async worker infrastructure must precede receipt/provider processing tickets"
+    ],
+    "completion_status": {
+      "stage_specific_status": "ready_for_stage_5_after_stage_4",
+      "global_status": "ready_for_next_stage",
+      "reason": "Architecture is usable for later development orchestration after Stage 4 UX architecture defines screens and interaction behavior.",
+      "blocking_items": [],
+      "next_actions": [
+        "Use Stage 4 outputs plus this architecture package for Stage 5 planning."
+      ],
+      "ready_for": "Stage 5"
+    }
+  },
+  "completion_status": {
+    "stage_specific_status": "ready_for_stage_4",
+    "global_status": "ready_for_next_stage",
+    "reason": "All eight Stage 3 architecture outputs exist, service/data/API/integration/security/infrastructure/scalability foundations are defined, and high-risk items have mitigation paths.",
+    "blocking_items": [],
+    "next_actions": [
+      "Run Stage 4 UX and interaction architecture using the Stage 4 handoff.",
+      "Carry Stage 5 provider selection and cost model gaps forward without blocking Stage 4."
+    ],
+    "ready_for": "Stage 4"
+  }
 }

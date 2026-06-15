@@ -1,29 +1,305 @@
 {
   "stage": "Stage 4",
   "command": "stage-4-ux-interaction-architecture",
-  "status": "not_started",
-  "stage_1_inputs": {},
-  "stage_2_inputs": {},
-  "stage_3_inputs": {},
-  "preflight": {},
-  "user_journeys": {},
-  "interaction_architecture": {},
-  "screen_system": {},
-  "feature_behaviors": {},
-  "state_transition_map": {},
-  "accessibility_framework": {},
-  "ux_decisions": [],
-  "ux_risks": [],
-  "interaction_tradeoffs": [],
+  "status": "completed",
+  "stage_1_inputs": {
+    "source_output_directory": "Build-Plans/Stage-1/",
+    "required_files_loaded": [
+      "02-user-system-map.json",
+      "03-workflow-architecture.json",
+      "04-product-capabilities.json",
+      "05-feature-structure.json",
+      "06-product-boundaries.json",
+      "08-mvp-operational-model.json",
+      "10-success-framework.json"
+    ]
+  },
+  "stage_2_inputs": {
+    "source_output_directory": "Build-Plans/Stage-2/",
+    "required_files_loaded": [
+      "01-market-analysis.json",
+      "05-risk-validation.json",
+      "06-strategic-positioning.json"
+    ],
+    "key_constraints": [
+      "external-provider public trip support",
+      "public/private financial trust cues",
+      "ledger separation",
+      "receipt source/display clarity"
+    ]
+  },
+  "stage_3_inputs": {
+    "source_output_directory": "Build-Plans/Stage-3/",
+    "required_files_loaded": [
+      "01-system-topology.json",
+      "02-service-architecture.json",
+      "03-data-architecture.json",
+      "04-api-architecture.json",
+      "06-security-foundations.json",
+      "08-scalability-framework.json"
+    ],
+    "architecture_state": "Build-Plans/Build-status/Architecture-state.json",
+    "stage_3_completion_status": "ready_for_stage_4"
+  },
+  "preflight": {
+    "stage_1_user_and_workflow_outputs_exist": true,
+    "stage_3_architecture_outputs_exist": true,
+    "primary_users_defined": true,
+    "mvp_workflows_defined": true,
+    "feature_structure_clear": true,
+    "security_and_permission_constraints_available": true,
+    "api_and_data_constraints_available": true,
+    "architecture_risks_block_ux": false,
+    "result": "passed"
+  },
+  "user_journeys": {
+    "artifact": "Build-Plans/Stage-4/01-user-journeys.json",
+    "journey_ids": [
+      "JOURNEY-001",
+      "JOURNEY-002",
+      "JOURNEY-003",
+      "JOURNEY-004",
+      "JOURNEY-005",
+      "JOURNEY-006"
+    ],
+    "coverage": "all MVP workflows"
+  },
+  "interaction_architecture": {
+    "artifact": "Build-Plans/Stage-4/02-interaction-architecture.json",
+    "navigation_model": [
+      "public navigation",
+      "member trip navigation",
+      "private event navigation",
+      "admin navigation"
+    ],
+    "core_patterns": [
+      "scope banner",
+      "external provider handoff",
+      "async job status",
+      "permission-aware action states"
+    ]
+  },
+  "screen_system": {
+    "artifact": "Build-Plans/Stage-4/03-screen-system.json",
+    "screen_groups": [
+      "Public Surface",
+      "Organizer Setup",
+      "Private Trip Workspace",
+      "Private Event Workspace",
+      "Admin Operations"
+    ],
+    "screen_count": 16
+  },
+  "feature_behaviors": {
+    "artifact": "Build-Plans/Stage-4/04-feature-behaviors.json",
+    "behavior_groups": [
+      "Trip Setup and Access",
+      "Public Funding and Updates",
+      "Trip Ledger and Receipts",
+      "Private Events",
+      "Media, Notifications, Moderation, and Audit"
+    ]
+  },
+  "state_transition_map": {
+    "artifact": "Build-Plans/Stage-4/05-state-transition-map.json",
+    "state_groups": [
+      "Trip Publication",
+      "Membership",
+      "External Contribution Reference",
+      "Receipt Processing",
+      "Private Event",
+      "Public Content and Moderation"
+    ]
+  },
+  "accessibility_framework": {
+    "artifact": "Build-Plans/Stage-4/06-accessibility-framework.json",
+    "baseline_required": true,
+    "coverage": [
+      "keyboard",
+      "screen reader",
+      "forms",
+      "visual contrast and non-color cues",
+      "motion and timing",
+      "error messaging"
+    ]
+  },
+  "ux_decisions": [
+    {
+      "decision_id": "UX-DEC-001",
+      "decision": "Center the MVP around a trip workspace with public page, private member workspace, and private event subspaces."
+    },
+    {
+      "decision_id": "UX-DEC-002",
+      "decision": "Treat external contribution checkout as a clear off-platform handoff."
+    },
+    {
+      "decision_id": "UX-DEC-003",
+      "decision": "Use scoped navigation with persistent trip context and nested private event context."
+    },
+    {
+      "decision_id": "UX-DEC-004",
+      "decision": "Use explicit confirmation before public publication or public media promotion."
+    },
+    {
+      "decision_id": "UX-DEC-005",
+      "decision": "Represent async work with pending, failed, retry, and manual fallback states."
+    },
+    {
+      "decision_id": "UX-DEC-006",
+      "decision": "Use screen groups aligned to public, private trip, private event, and admin scopes."
+    },
+    {
+      "decision_id": "UX-DEC-007",
+      "decision": "Specify launch-critical feature behavior by workflow group rather than isolated controls."
+    },
+    {
+      "decision_id": "UX-DEC-008",
+      "decision": "Represent workflow states explicitly in the interface instead of hiding backend or provider delays."
+    },
+    {
+      "decision_id": "UX-DEC-009",
+      "decision": "Treat accessibility as a baseline requirement for Stage 5, not an optional polish pass."
+    }
+  ],
+  "ux_risks": [
+    {
+      "risk_id": "UX-RISK-001",
+      "risk": "Users may confuse external contribution status with Crewly-held funds.",
+      "severity": "high",
+      "mitigation": "Use off-platform handoff language and avoid balance/custody labels for provider references."
+    },
+    {
+      "risk_id": "UX-RISK-002",
+      "risk": "Nested private event context may be confused with trip-wide context.",
+      "severity": "high",
+      "mitigation": "Use persistent event scope labeling and separate ledger summaries."
+    },
+    {
+      "risk_id": "UX-RISK-004",
+      "risk": "Trip Ledger screen could become overloaded by expenses, contribution references, and event summaries.",
+      "severity": "medium",
+      "mitigation": "Separate sections and summaries; never merge event balances into trip totals."
+    },
+    {
+      "risk_id": "UX-RISK-005",
+      "risk": "Public contribution setup could look like a native payout account flow.",
+      "severity": "high",
+      "mitigation": "Use external provider target language and omit Crewly payout/account balance controls."
+    },
+    {
+      "risk_id": "A11Y-RISK-001",
+      "risk": "Scope and privacy state could be communicated visually only.",
+      "severity": "high",
+      "mitigation": "Expose scope text, ARIA labels, and consistent headings for public/private/event contexts."
+    }
+  ],
+  "interaction_tradeoffs": [
+    {
+      "tradeoff_id": "UX-TRADEOFF-001",
+      "choice": "Separate public, trip, and event scopes clearly even if navigation is less compact.",
+      "benefit": "Reduces financial and privacy confusion.",
+      "cost": "More visible structure and labels."
+    },
+    {
+      "tradeoff_id": "UX-TRADEOFF-002",
+      "choice": "Show external provider handoff explicitly.",
+      "benefit": "Avoids misleading users about Crewly payment custody.",
+      "cost": "Contribution flow feels less seamless."
+    },
+    {
+      "tradeoff_id": "UX-TRADEOFF-003",
+      "choice": "Expose async states durably.",
+      "benefit": "Improves recoverability and trust.",
+      "cost": "Requires more state-specific UI and implementation work."
+    }
+  ],
   "open_questions": [],
   "interactive_guidance": {
     "open_questions": [],
-    "answered_questions": [],
-    "assumptions_made": [],
+    "answered_questions": [
+      "Stage 2 selected external-provider contribution handling.",
+      "Stage 3 defined public/private/event/admin scopes and role-based access."
+    ],
+    "assumptions_made": [
+      "Stage 4 assumes a responsive web app screen system rather than separate native app flows.",
+      "Stage 4 assumes provider selection is deferred to Stage 5 and does not alter the external handoff pattern.",
+      "Stage 4 assumes all public exposure actions require explicit confirmation.",
+      "Stage 4 assumes baseline accessibility support is required for MVP."
+    ],
     "blocked_decisions": [],
-    "user_confirmations": [],
-    "ux_confidence_gaps": []
+    "user_confirmations": [
+      "Use external provider option for contribution checkout and payout."
+    ],
+    "ux_confidence_gaps": [
+      "Exact contribution provider return/sync behavior remains provider-dependent.",
+      "Visual density of ledger and receipt screens should be validated in design prototypes.",
+      "Specific notification channel behavior remains a Stage 5 provider/detail decision."
+    ]
   },
-  "stage_5_handoff": {},
-  "completion_status": {}
+  "stage_5_handoff": {
+    "source_stage": "Stage 4",
+    "target_stage": "Stage 5",
+    "source_output_directory": "Build-Plans/Stage-4/",
+    "required_files": [
+      "Build-Plans/Stage-4/01-user-journeys.json",
+      "Build-Plans/Stage-4/02-interaction-architecture.json",
+      "Build-Plans/Stage-4/03-screen-system.json",
+      "Build-Plans/Stage-4/04-feature-behaviors.json",
+      "Build-Plans/Stage-4/05-state-transition-map.json",
+      "Build-Plans/Stage-4/06-accessibility-framework.json"
+    ],
+    "ready": true,
+    "blocking_items": [],
+    "accepted_risks": [
+      "UX-RISK-001",
+      "UX-RISK-002",
+      "UX-RISK-004",
+      "UX-RISK-005",
+      "A11Y-RISK-001"
+    ],
+    "traceability_refs": [
+      "JOURNEY-001",
+      "JOURNEY-002",
+      "JOURNEY-003",
+      "JOURNEY-004",
+      "JOURNEY-005",
+      "JOURNEY-006",
+      "SCREEN-001",
+      "SCREEN-008",
+      "SCREEN-009",
+      "SCREEN-013",
+      "SCREEN-015",
+      "UX-DEC-002",
+      "UX-DEC-005",
+      "UX-DEC-009"
+    ],
+    "development_orchestration_inputs": [
+      "Build implementation slices around screen groups and behavior groups.",
+      "Every sensitive workflow ticket needs permission, audit, state, and accessibility acceptance criteria.",
+      "External contribution provider implementation must use off-platform handoff and provider-reference terminology.",
+      "Receipt implementation must include async state, manual fallback, and source/display labeling.",
+      "Private event implementation must preserve participant-scoped navigation and separate ledger summaries."
+    ],
+    "completion_status": {
+      "stage_specific_status": "ready_for_stage_5",
+      "global_status": "ready_for_next_stage",
+      "reason": "Stage 4 UX outputs are complete and usable for development orchestration.",
+      "blocking_items": [],
+      "next_actions": [
+        "Begin Stage 5 development orchestration using Stage 1 through Stage 4 outputs."
+      ],
+      "ready_for": "Stage 5"
+    }
+  },
+  "completion_status": {
+    "stage_specific_status": "ready_for_stage_5",
+    "global_status": "ready_for_next_stage",
+    "reason": "All six Stage 4 outputs exist, MVP journeys are mapped, screen system and behavior rules cover launch-critical workflows, state transitions and accessibility framework are defined, and high-risk UX items have mitigation paths.",
+    "blocking_items": [],
+    "next_actions": [
+      "Run Stage 4 readiness audit.",
+      "Begin Stage 5 development orchestration after audit passes."
+    ],
+    "ready_for": "Stage 5"
+  }
 }

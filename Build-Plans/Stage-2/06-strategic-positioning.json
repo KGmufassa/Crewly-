@@ -1,0 +1,50 @@
+{
+  "stage": "Stage 2",
+  "artifact_id": "ARTIFACT-STAGE2-06",
+  "name": "Strategic Positioning",
+  "status": "completed",
+  "source_stage_1_files": [
+    "Build-Plans/Stage-1/01-product-foundation.json",
+    "Build-Plans/Stage-1/05-feature-structure.json",
+    "Build-Plans/Stage-1/08-mvp-operational-model.json"
+  ],
+  "assumption_ids": [
+    "ASSUMPTION-005",
+    "ASSUMPTION-006",
+    "ASSUMPTION-007",
+    "ASSUMPTION-010",
+    "ASSUMPTION-011",
+    "ASSUMPTION-012"
+  ],
+  "positioning": {
+    "primary_position": "A private-first trip coordination hub with public support and receipt-backed spending transparency.",
+    "avoid_positioning_as": [
+      "generic itinerary planner",
+      "generic crowdfunding site",
+      "generic expense splitter",
+      "P2P settlement app"
+    ],
+    "validated_wedge": "External-provider public trip support plus member-only planning, receipt localization, and subgroup expense separation.",
+    "confidence": 0.76,
+    "evidence_quality": "medium"
+  },
+  "architecture_implications": [
+    "Public pages must be a bounded surface, not a projection of the full private trip.",
+    "Public contribution checkout and payout must be delegated to an external crowdfunding/payment provider in MVP.",
+    "Contribution ledger, trip expense ledger, and private event ledger must be modeled separately.",
+    "Receipt records need both immutable source values and localized display views.",
+    "Private event payment status should remain tracking-only for MVP."
+  ],
+  "stage_3_focus": [
+    "ExternalContributionProvider boundary and contribution-reference audit model",
+    "RBAC and visibility model across public, trip member, private event participant, and admin scopes",
+    "Ledger domain separation",
+    "Receipt source-of-truth plus localization display model",
+    "Moderation and reporting hooks for public surfaces"
+  ],
+  "recommendations": [
+    "Advance architecture with an external-provider contribution boundary; do not build Crewly-owned pooled payments in MVP.",
+    "Do not merge private event balances into trip totals in MVP.",
+    "Make privacy defaults and public promotion flows explicit inputs to Stage 4 UX architecture."
+  ]
+}

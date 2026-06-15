@@ -1,0 +1,72 @@
+{
+  "stage": "Stage 3",
+  "artifact_id": "ARTIFACT-STAGE3-08",
+  "name": "Scalability Framework",
+  "status": "completed",
+  "related_stage_1_files": [
+    "Build-Plans/Stage-1/08-mvp-operational-model.json",
+    "Build-Plans/Stage-1/10-success-framework.json"
+  ],
+  "related_stage_2_assumption_ids": [
+    "ASSUMPTION-014",
+    "ASSUMPTION-011",
+    "ASSUMPTION-012"
+  ],
+  "architecture_decisions": [
+    {
+      "decision_id": "ARCH-DEC-014",
+      "decision": "Scale expensive and failure-prone workflows independently through queues and workers.",
+      "rationale": "Receipt OCR, translation, media handling, notifications, and provider sync are cost-sensitive and external-service dependent."
+    },
+    {
+      "decision_id": "ARCH-DEC-015",
+      "decision": "Optimize first for correctness, scope separation, and auditability before high-scale collaboration.",
+      "rationale": "MVP risks are trust, privacy, and ledger clarity rather than raw traffic volume."
+    }
+  ],
+  "scalability_framework": {
+    "primary_bottlenecks": [
+      "receipt OCR volume",
+      "translation volume",
+      "media storage and delivery",
+      "notification fanout",
+      "provider sync reliability",
+      "authorization checks across trip/event scopes"
+    ],
+    "scaling_controls": [
+      "queue concurrency limits",
+      "per-trip and per-user upload limits",
+      "retry with backoff for external services",
+      "cached public trip reads",
+      "indexed scope-aware ledger queries",
+      "manual reconciliation fallback for provider sync"
+    ],
+    "cost_controls": [
+      "manual receipt correction fallback",
+      "only translate receipts on demand or default trip language need",
+      "store display FX snapshots instead of frequent recalculation",
+      "media size limits and lifecycle policies"
+    ],
+    "resilience_strategy": [
+      "core trip workspace remains available when OCR/translation/FX providers fail",
+      "external contribution provider outages are surfaced as unavailable or pending external checkout",
+      "ledger writes are transactional and audited",
+      "receipt processing failures are user-correctable"
+    ]
+  },
+  "risks_and_constraints": [
+    {
+      "risk_id": "ARCH-RISK-009",
+      "risk": "AI/document-processing costs may grow faster than monetization.",
+      "severity": "medium",
+      "mitigation": "Add usage limits, on-demand processing, and cost telemetry before launch."
+    }
+  ],
+  "unresolved_questions": [],
+  "stage_4_handoff_notes": [
+    "Design should account for delayed processing states and retry/manual correction paths."
+  ],
+  "stage_5_handoff_notes": [
+    "Implementation planning should include telemetry and limits for OCR, translation, media, notifications, and provider sync."
+  ]
+}

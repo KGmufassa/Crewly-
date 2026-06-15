@@ -1,0 +1,306 @@
+{
+  "stage": "Stage 4",
+  "artifact_id": "ARTIFACT-STAGE4-03",
+  "name": "Screen System",
+  "status": "completed",
+  "related_stage_1_features": [
+    "FEATURE-001",
+    "FEATURE-003",
+    "FEATURE-005",
+    "FEATURE-006",
+    "FEATURE-008",
+    "FEATURE-009",
+    "FEATURE-014",
+    "FEATURE-016",
+    "FEATURE-017",
+    "FEATURE-019",
+    "FEATURE-020",
+    "FEATURE-023",
+    "FEATURE-024"
+  ],
+  "related_stage_3_constraints": [
+    "PublicTripAPI",
+    "TripWorkspaceAPI",
+    "ContributionReferenceAPI",
+    "LedgerAPI",
+    "ReceiptAPI",
+    "MediaAndBulletinAPI",
+    "AdminOperationsAPI"
+  ],
+  "ux_decisions": [
+    {
+      "decision_id": "UX-DEC-006",
+      "decision": "Use screen groups aligned to public, private trip, private event, and admin scopes.",
+      "rationale": "The architecture has explicit trust and data boundaries across these scopes."
+    }
+  ],
+  "screen_groups": [
+    {
+      "group_id": "SCREEN-GROUP-001",
+      "name": "Public Surface",
+      "screen_ids": [
+        "SCREEN-001",
+        "SCREEN-002"
+      ]
+    },
+    {
+      "group_id": "SCREEN-GROUP-002",
+      "name": "Organizer Setup",
+      "screen_ids": [
+        "SCREEN-003",
+        "SCREEN-004",
+        "SCREEN-005"
+      ]
+    },
+    {
+      "group_id": "SCREEN-GROUP-003",
+      "name": "Private Trip Workspace",
+      "screen_ids": [
+        "SCREEN-006",
+        "SCREEN-007",
+        "SCREEN-008",
+        "SCREEN-009",
+        "SCREEN-010",
+        "SCREEN-011"
+      ]
+    },
+    {
+      "group_id": "SCREEN-GROUP-004",
+      "name": "Private Event Workspace",
+      "screen_ids": [
+        "SCREEN-012",
+        "SCREEN-013",
+        "SCREEN-014"
+      ]
+    },
+    {
+      "group_id": "SCREEN-GROUP-005",
+      "name": "Admin Operations",
+      "screen_ids": [
+        "SCREEN-015",
+        "SCREEN-016"
+      ]
+    }
+  ],
+  "screen_inventory": [
+    {
+      "screen_id": "SCREEN-001",
+      "name": "Public Trip Page",
+      "purpose": "Show selected public trip summary, updates, and external contribution CTA.",
+      "permissions": [
+        "public_viewer",
+        "public_supporter"
+      ],
+      "api_ids": [
+        "API-001"
+      ]
+    },
+    {
+      "screen_id": "SCREEN-002",
+      "name": "External Contribution Return",
+      "purpose": "Confirm return from provider when available and explain provider-owned status.",
+      "permissions": [
+        "public_supporter"
+      ],
+      "api_ids": [
+        "API-001"
+      ]
+    },
+    {
+      "screen_id": "SCREEN-003",
+      "name": "Trip Creation",
+      "purpose": "Create trip basics and save draft.",
+      "permissions": [
+        "trip_organizer"
+      ],
+      "api_ids": [
+        "API-002"
+      ]
+    },
+    {
+      "screen_id": "SCREEN-004",
+      "name": "Visibility and Public Page Settings",
+      "purpose": "Configure public/private content boundaries and publication state.",
+      "permissions": [
+        "trip_organizer"
+      ],
+      "api_ids": [
+        "API-002",
+        "API-006"
+      ]
+    },
+    {
+      "screen_id": "SCREEN-005",
+      "name": "External Contribution Setup",
+      "purpose": "Configure provider link or campaign reference without Crewly payout controls.",
+      "permissions": [
+        "trip_organizer"
+      ],
+      "api_ids": [
+        "API-003"
+      ]
+    },
+    {
+      "screen_id": "SCREEN-006",
+      "name": "Private Trip Overview",
+      "purpose": "Orient members to trip status, updates, and next actions.",
+      "permissions": [
+        "trip_organizer",
+        "trip_member"
+      ],
+      "api_ids": [
+        "API-002"
+      ]
+    },
+    {
+      "screen_id": "SCREEN-007",
+      "name": "Members and Invitations",
+      "purpose": "Invite, approve, and review members.",
+      "permissions": [
+        "trip_organizer"
+      ],
+      "api_ids": [
+        "API-002"
+      ]
+    },
+    {
+      "screen_id": "SCREEN-008",
+      "name": "Trip Ledger",
+      "purpose": "Show trip expenses and separate external contribution references.",
+      "permissions": [
+        "trip_organizer",
+        "trip_member"
+      ],
+      "api_ids": [
+        "API-003",
+        "API-004"
+      ]
+    },
+    {
+      "screen_id": "SCREEN-009",
+      "name": "Receipt Detail",
+      "purpose": "Review original receipt, OCR extraction, translation, display FX, and corrections.",
+      "permissions": [
+        "trip_organizer",
+        "trip_member",
+        "private_event_participant"
+      ],
+      "api_ids": [
+        "API-005"
+      ]
+    },
+    {
+      "screen_id": "SCREEN-010",
+      "name": "Bulletins",
+      "purpose": "Create and view member-only or public updates.",
+      "permissions": [
+        "trip_organizer",
+        "trip_member"
+      ],
+      "api_ids": [
+        "API-006"
+      ]
+    },
+    {
+      "screen_id": "SCREEN-011",
+      "name": "Member Album",
+      "purpose": "Upload member-only photos and promote selected public highlights.",
+      "permissions": [
+        "trip_organizer",
+        "trip_member"
+      ],
+      "api_ids": [
+        "API-006"
+      ]
+    },
+    {
+      "screen_id": "SCREEN-012",
+      "name": "Private Events List",
+      "purpose": "Create and access participant-scoped event spaces.",
+      "permissions": [
+        "trip_organizer",
+        "trip_member"
+      ],
+      "api_ids": [
+        "API-004"
+      ]
+    },
+    {
+      "screen_id": "SCREEN-013",
+      "name": "Private Event Detail",
+      "purpose": "Show event participants, expenses, and event-specific balances.",
+      "permissions": [
+        "private_event_participant"
+      ],
+      "api_ids": [
+        "API-004"
+      ]
+    },
+    {
+      "screen_id": "SCREEN-014",
+      "name": "Event Payment Status",
+      "purpose": "Update tracking-only payment status without in-app settlement.",
+      "permissions": [
+        "private_event_participant"
+      ],
+      "api_ids": [
+        "API-004"
+      ]
+    },
+    {
+      "screen_id": "SCREEN-015",
+      "name": "Report Queue",
+      "purpose": "Review content and support reports.",
+      "permissions": [
+        "platform_admin"
+      ],
+      "api_ids": [
+        "API-007"
+      ]
+    },
+    {
+      "screen_id": "SCREEN-016",
+      "name": "Audit Detail",
+      "purpose": "Inspect audit events and provider references for support.",
+      "permissions": [
+        "platform_admin"
+      ],
+      "api_ids": [
+        "API-007"
+      ]
+    }
+  ],
+  "navigation_structure": {
+    "primary_trip_tabs": [
+      "Overview",
+      "Ledger",
+      "Receipts",
+      "Updates",
+      "Album",
+      "Events",
+      "Members"
+    ],
+    "event_tabs": [
+      "Overview",
+      "Expenses",
+      "Payment Status",
+      "Participants"
+    ],
+    "admin_tabs": [
+      "Reports",
+      "Audit"
+    ]
+  },
+  "risks_and_constraints": [
+    {
+      "risk_id": "UX-RISK-004",
+      "risk": "Trip Ledger screen could become overloaded by expenses, contribution references, and event summaries.",
+      "severity": "medium",
+      "mitigation": "Separate sections and summaries; never merge event balances into trip totals."
+    }
+  ],
+  "unresolved_questions": [],
+  "stage_5_handoff_notes": [
+    "Each screen should become a Stage 5 implementation slice or sub-slice with explicit API and permission mapping."
+  ]
+}

@@ -1,0 +1,211 @@
+{
+  "stage": "Stage 4",
+  "artifact_id": "ARTIFACT-STAGE4-05",
+  "name": "State Transition Map",
+  "status": "completed",
+  "related_stage_1_workflows": [
+    "WORKFLOW-001",
+    "WORKFLOW-002",
+    "WORKFLOW-003",
+    "WORKFLOW-004",
+    "WORKFLOW-005",
+    "WORKFLOW-006",
+    "WORKFLOW-007",
+    "WORKFLOW-008",
+    "WORKFLOW-009",
+    "WORKFLOW-010"
+  ],
+  "related_stage_3_constraints": [
+    "queue-backed async jobs",
+    "provider sync pending/manual fallback",
+    "role and scope authorization",
+    "append-only audit events"
+  ],
+  "ux_decisions": [
+    {
+      "decision_id": "UX-DEC-008",
+      "decision": "Represent workflow states explicitly in the interface instead of hiding backend or provider delays.",
+      "rationale": "Stage 3 architecture uses async workers and external providers."
+    }
+  ],
+  "workflow_states": [
+    {
+      "state_group_id": "STATE-GROUP-001",
+      "name": "Trip Publication",
+      "states": [
+        "draft",
+        "private_ready",
+        "public_configured",
+        "published",
+        "publish_failed"
+      ],
+      "transitions": [
+        "draft -> private_ready when required trip basics are complete",
+        "private_ready -> public_configured when visibility and external provider target are configured",
+        "public_configured -> published after explicit publish action",
+        "any publish attempt -> publish_failed on validation or API failure"
+      ],
+      "recovery": [
+        "correct validation errors",
+        "save draft",
+        "publish without contribution CTA if provider target is absent"
+      ]
+    },
+    {
+      "state_group_id": "STATE-GROUP-002",
+      "name": "Membership",
+      "states": [
+        "invited",
+        "requested",
+        "approved",
+        "denied",
+        "removed"
+      ],
+      "transitions": [
+        "invited/requested -> approved by organizer",
+        "requested -> denied by organizer",
+        "approved -> removed by organizer"
+      ],
+      "recovery": [
+        "resend invite",
+        "request access again where allowed"
+      ]
+    },
+    {
+      "state_group_id": "STATE-GROUP-003",
+      "name": "External Contribution Reference",
+      "states": [
+        "not_configured",
+        "configured",
+        "handoff_started",
+        "provider_pending",
+        "provider_synced",
+        "manual_reconciliation_needed",
+        "provider_unavailable"
+      ],
+      "transitions": [
+        "not_configured -> configured when organizer saves provider target",
+        "configured -> handoff_started when supporter selects CTA",
+        "handoff_started -> provider_pending if return/sync is expected",
+        "provider_pending -> provider_synced on import/webhook/manual confirmation",
+        "provider_pending -> manual_reconciliation_needed on sync failure"
+      ],
+      "recovery": [
+        "retry provider sync",
+        "manual reconciliation",
+        "edit provider target"
+      ]
+    },
+    {
+      "state_group_id": "STATE-GROUP-004",
+      "name": "Receipt Processing",
+      "states": [
+        "uploaded",
+        "ocr_pending",
+        "ocr_complete",
+        "ocr_failed",
+        "translation_pending",
+        "translation_complete",
+        "translation_failed",
+        "fx_pending",
+        "fx_complete",
+        "fx_failed",
+        "manual_corrected"
+      ],
+      "transitions": [
+        "uploaded -> ocr_pending automatically",
+        "ocr_pending -> ocr_complete or ocr_failed",
+        "ocr_complete -> translation_pending when translation requested or defaulted",
+        "translation_pending -> translation_complete or translation_failed",
+        "ocr_complete -> fx_pending when display currency differs",
+        "fx_pending -> fx_complete or fx_failed",
+        "any extracted state -> manual_corrected on user correction"
+      ],
+      "recovery": [
+        "retry failed job",
+        "manual source field entry",
+        "show original receipt values"
+      ]
+    },
+    {
+      "state_group_id": "STATE-GROUP-005",
+      "name": "Private Event",
+      "states": [
+        "created",
+        "participants_selected",
+        "active",
+        "expense_logged",
+        "payment_status_updated",
+        "archived"
+      ],
+      "transitions": [
+        "created -> participants_selected after valid participant selection",
+        "participants_selected -> active",
+        "active -> expense_logged when event expense is added",
+        "expense_logged -> payment_status_updated on tracking status update"
+      ],
+      "recovery": [
+        "edit participant list",
+        "correct expense",
+        "change tracking-only payment status"
+      ]
+    },
+    {
+      "state_group_id": "STATE-GROUP-006",
+      "name": "Public Content and Moderation",
+      "states": [
+        "member_only",
+        "public_pending_confirmation",
+        "public",
+        "reported",
+        "under_review",
+        "hidden",
+        "restored"
+      ],
+      "transitions": [
+        "member_only -> public_pending_confirmation on promote action",
+        "public_pending_confirmation -> public after confirmation",
+        "public -> reported after report",
+        "reported -> under_review by admin",
+        "under_review -> hidden or restored"
+      ],
+      "recovery": [
+        "revert to member-only",
+        "admin restore",
+        "show moderation status"
+      ]
+    }
+  ],
+  "screen_states": [
+    "loading",
+    "empty",
+    "permission_denied",
+    "read_only",
+    "editable",
+    "saving",
+    "save_success",
+    "save_failed",
+    "sync_pending",
+    "sync_failed"
+  ],
+  "feature_states": [
+    "external_provider_unconfigured",
+    "receipt_processing_pending",
+    "receipt_manual_entry_available",
+    "event_scope_active",
+    "public_visibility_confirm_required",
+    "moderation_action_required"
+  ],
+  "risks_and_constraints": [
+    {
+      "risk_id": "UX-RISK-007",
+      "risk": "Failure states may hide recovery options for receipt or contribution workflows.",
+      "severity": "medium",
+      "mitigation": "Every failed async state must expose retry or manual fallback."
+    }
+  ],
+  "unresolved_questions": [],
+  "stage_5_handoff_notes": [
+    "Implementation should include explicit enum/state modeling for trip publication, contribution sync, receipt processing, event status, and moderation."
+  ]
+}

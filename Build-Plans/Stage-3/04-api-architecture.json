@@ -1,0 +1,158 @@
+{
+  "stage": "Stage 3",
+  "artifact_id": "ARTIFACT-STAGE3-04",
+  "name": "API Architecture",
+  "status": "completed",
+  "related_stage_1_files": [
+    "Build-Plans/Stage-1/03-workflow-architecture.json",
+    "Build-Plans/Stage-1/07-dependency-map.json"
+  ],
+  "related_stage_2_assumption_ids": [
+    "ASSUMPTION-002",
+    "ASSUMPTION-009",
+    "ASSUMPTION-010",
+    "ASSUMPTION-011",
+    "ASSUMPTION-012"
+  ],
+  "architecture_decisions": [
+    {
+      "decision_id": "ARCH-DEC-008",
+      "decision": "Expose role-scoped application APIs and keep provider/admin APIs internal.",
+      "rationale": "Public users, members, and admins have materially different access boundaries."
+    }
+  ],
+  "api_surfaces": [
+    {
+      "api_id": "API-001",
+      "name": "PublicTripAPI",
+      "operations": [
+        "getPublicTrip",
+        "getPublicUpdates",
+        "getContributionProviderTarget"
+      ],
+      "auth": "optional_or_public_read",
+      "workflow_ids": [
+        "WORKFLOW-003",
+        "WORKFLOW-006"
+      ]
+    },
+    {
+      "api_id": "API-002",
+      "name": "TripWorkspaceAPI",
+      "operations": [
+        "createTrip",
+        "updateTripVisibility",
+        "inviteMember",
+        "approveMember",
+        "getPrivateTrip"
+      ],
+      "auth": "authenticated_member_or_organizer",
+      "workflow_ids": [
+        "WORKFLOW-001",
+        "WORKFLOW-002"
+      ]
+    },
+    {
+      "api_id": "API-003",
+      "name": "ContributionReferenceAPI",
+      "operations": [
+        "configureExternalCampaign",
+        "recordExternalContributionReference",
+        "syncProviderStatus",
+        "reconcileContributionReference"
+      ],
+      "auth": "organizer_or_admin",
+      "workflow_ids": [
+        "WORKFLOW-003",
+        "WORKFLOW-010"
+      ]
+    },
+    {
+      "api_id": "API-004",
+      "name": "LedgerAPI",
+      "operations": [
+        "createTripExpense",
+        "createPrivateEvent",
+        "addEventParticipant",
+        "createEventExpense",
+        "updatePaymentStatus",
+        "getSeparatedBalanceSummary"
+      ],
+      "auth": "scope_authorized_member",
+      "workflow_ids": [
+        "WORKFLOW-004",
+        "WORKFLOW-008",
+        "WORKFLOW-009",
+        "WORKFLOW-010"
+      ]
+    },
+    {
+      "api_id": "API-005",
+      "name": "ReceiptAPI",
+      "operations": [
+        "uploadReceipt",
+        "getReceipt",
+        "correctReceiptFields",
+        "requestTranslation",
+        "getDisplayCurrencyValues"
+      ],
+      "auth": "scope_authorized_member",
+      "workflow_ids": [
+        "WORKFLOW-005"
+      ]
+    },
+    {
+      "api_id": "API-006",
+      "name": "MediaAndBulletinAPI",
+      "operations": [
+        "uploadMedia",
+        "promotePublicHighlight",
+        "createBulletinPost",
+        "setAudience"
+      ],
+      "auth": "scope_authorized_member_or_organizer",
+      "workflow_ids": [
+        "WORKFLOW-006",
+        "WORKFLOW-007"
+      ]
+    },
+    {
+      "api_id": "API-007",
+      "name": "AdminOperationsAPI",
+      "operations": [
+        "listReports",
+        "recordModerationAction",
+        "searchAuditEvents",
+        "viewProviderReference"
+      ],
+      "auth": "platform_admin",
+      "workflow_ids": [
+        "WORKFLOW-003",
+        "WORKFLOW-006",
+        "WORKFLOW-007",
+        "WORKFLOW-009"
+      ]
+    }
+  ],
+  "api_constraints": [
+    "Every write API emits an AuditEvent.",
+    "Private event APIs require event participant authorization.",
+    "Contribution APIs must use external-reference terminology and cannot expose Crewly payout controls.",
+    "Receipt correction APIs must preserve prior extracted and corrected values."
+  ],
+  "risks_and_constraints": [
+    {
+      "risk_id": "ARCH-RISK-004",
+      "risk": "Improper API authorization could expose private trip or event data.",
+      "severity": "high",
+      "mitigation": "Centralize access checks in IdentityAccessService and require scope checks for every private resource."
+    }
+  ],
+  "unresolved_questions": [],
+  "stage_4_handoff_notes": [
+    "Screen behavior should map cleanly to API authorization states: public, organizer, member, event participant, and admin."
+  ],
+  "stage_5_handoff_notes": [
+    "Implementation tickets should include authorization tests for each API surface."
+  ]
+}

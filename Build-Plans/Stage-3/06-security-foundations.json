@@ -1,0 +1,85 @@
+{
+  "stage": "Stage 3",
+  "artifact_id": "ARTIFACT-STAGE3-06",
+  "name": "Security Foundations",
+  "status": "completed",
+  "related_stage_1_files": [
+    "Build-Plans/Stage-1/02-user-system-map.json",
+    "Build-Plans/Stage-1/06-product-boundaries.json",
+    "Build-Plans/Stage-1/09-risk-and-constraints.json"
+  ],
+  "related_stage_2_assumption_ids": [
+    "ASSUMPTION-002",
+    "ASSUMPTION-007",
+    "ASSUMPTION-009",
+    "ASSUMPTION-010",
+    "ASSUMPTION-012"
+  ],
+  "architecture_decisions": [
+    {
+      "decision_id": "ARCH-DEC-011",
+      "decision": "Use role and scope based authorization across all private resources.",
+      "rationale": "Trip membership, organizer control, private event participant access, public supporter access, and admin access are distinct."
+    },
+    {
+      "decision_id": "ARCH-DEC-012",
+      "decision": "Audit all sensitive state changes.",
+      "rationale": "Financial references, ledgers, receipt corrections, membership, visibility, and moderation require traceability."
+    }
+  ],
+  "security_foundations": {
+    "authentication": "Authenticated accounts for organizers, members, and admins; public supporters can view public trip pages and leave the app for external-provider checkout.",
+    "authorization_roles": [
+      "public_viewer",
+      "public_supporter",
+      "trip_organizer",
+      "trip_member",
+      "private_event_participant",
+      "platform_admin"
+    ],
+    "scope_rules": [
+      "Trip private data requires approved membership.",
+      "Private event data requires event participation or admin access.",
+      "Public content requires explicit organizer publication.",
+      "External contribution provider references are organizer/admin visible unless intentionally summarized publicly.",
+      "Receipt and media access follows trip or event scope."
+    ],
+    "sensitive_data": [
+      "user account data",
+      "membership state",
+      "receipt images and extracted fields",
+      "private event participants and balances",
+      "external provider references",
+      "audit events"
+    ],
+    "controls": [
+      "centralized authorization checks",
+      "object storage signed URLs",
+      "append-only audit events",
+      "moderation reporting workflow",
+      "rate limits for uploads, invites, reports, and provider sync",
+      "least-privilege admin console"
+    ]
+  },
+  "risks_and_constraints": [
+    {
+      "risk_id": "ARCH-RISK-006",
+      "risk": "Visibility bugs could leak private trip, event, receipt, or media data.",
+      "severity": "high",
+      "mitigation": "Centralize visibility policy and test all public/private/event participant transitions."
+    },
+    {
+      "risk_id": "ARCH-RISK-007",
+      "risk": "External contribution references may contain provider metadata that should not be public.",
+      "severity": "medium",
+      "mitigation": "Store provider metadata separately from public contribution summaries."
+    }
+  ],
+  "unresolved_questions": [],
+  "stage_4_handoff_notes": [
+    "Design must show clear access states and avoid exposing private context on public pages."
+  ],
+  "stage_5_handoff_notes": [
+    "Add authorization and audit-log tests to every sensitive workflow ticket."
+  ]
+}
